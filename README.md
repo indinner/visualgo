@@ -4,7 +4,7 @@
 
 ## 项目主页如下图：
 
-<img width="90%" height="90%" src="https://github.com/kinlog/visualgo/blob/gh-pages/image/main_page.png">
+<img width="100%" height="100%" src="https://github.com/kinlog/visualgo/blob/gh-pages/image/main_page.png">
 
 ## 项目链接如下：
 
