@@ -361,7 +361,7 @@ AVLTree.prototype.leftRightTurn = function(first, second, third) {
 		}
 		second.rightChild = third.leftChild ;
 		{
-			this.cmd("Connect", second.objectID, second.rightChild.objectID. this.foregroundColor) ;
+			this.cmd("Connect", second.objectID, second.rightChild.objectID, this.foregroundColor) ;
 			this.cmd("Step") ;
 		}
 		second.rightChild.parent = second ;
@@ -448,7 +448,7 @@ AVLTree.prototype.rightLeftTurn = function(first, second, third) {
 		}
 		first.rightChild = third.leftChild ;
 		{
-			this.cmd("Connect", first.objectID, first.rightChild.objectID. this.foregroundColor) ;
+			this.cmd("Connect", first.objectID, first.rightChild.objectID, this.foregroundColor) ;
 			this.cmd("Step") ;
 		}
 		first.rightChild.parent = first ;
