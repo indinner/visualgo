@@ -51,7 +51,7 @@ LinkList.prototype.initAttributes = function() {
 	this.startHeadY = 200 ; // 头结点的y坐标
 	this.startheadArrowY = 250 ; // 头指针的y坐标
 	this.starttailArrowY = 310 ; // 尾指针的y坐标
-	this.length = 30 ; // 箭头的长度
+	this.arrowLength = 30 ; // 箭头的长度
 	this.implementAction(this.initHeadNode.bind(this), 0);
 }
 
@@ -59,6 +59,8 @@ LinkList.prototype.initAttributes = function() {
 LinkList.prototype.insertCallBack = function(seq, value) {
 	if (seq != "" && value != "")
 	{
+		seq = parseInt(seq);
+		value = parseInt(value);
 		if(this.head.value <= 5) {
 			this.implementAction(this.insertNode.bind(this), [seq, value]);
 		}
@@ -96,9 +98,9 @@ LinkList.prototype.initHeadNode = function() {
 	this.tailArrow = new ListNode(this.objectID, 'tail', this.startX, this.starttailArrowY, null) ;
 	this.objectID ++ ;
 	{
-		this.cmd("CreatePointer", this.headArrow.objectID, "head", this.length, 'up', this.headArrow.x, this.headArrow.y) ;
+		this.cmd("CreatePointer", this.headArrow.objectID, "head", this.arrowLength, 'up', this.headArrow.x, this.headArrow.y) ;
 		this.cmd("SetForegroundColor", this.headArrow.objectID, this.tomato) ;
-		this.cmd("CreatePointer", this.tailArrow.objectID, "tail", this.length, 'up', this.tailArrow.x, this.tailArrow.y) ;
+		this.cmd("CreatePointer", this.tailArrow.objectID, "tail", this.arrowLength, 'up', this.tailArrow.x, this.tailArrow.y) ;
 		this.cmd("SetForegroundColor", this.tailArrow.objectID, this.tomato) ;
 	}
 	return this.commands ;

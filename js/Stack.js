@@ -66,10 +66,6 @@ Stack.prototype.initCallBack = function(length) {
 
 // 入栈回调函数
 Stack.prototype.pushCallBack = function(value) {
-	if (this.stack == null) {
-		this.cmd("SetState", "请先初始化数组");
-		return;
-	}
 	if (value.trim() != "") {
 		this.implementAction(this.pushNode.bind(this), value.trim());
 	}
@@ -120,6 +116,10 @@ Stack.prototype.initArray = function(maxSize) {
 	
 // 入栈
 Stack.prototype.pushNode = function(value) {
+	if (this.stack == null) {
+		alert('stack not init yet!');
+		return commands;
+	}
 	if(this.head >= this.maxSize-1) {
 		alert('Already full!') ;
 	}

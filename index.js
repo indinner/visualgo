@@ -446,7 +446,6 @@ $(function(){
      });
      //顺序表删除数据
      $('.deleteGo p').click(function(){
-        alert('insert');
      	var deleteNumber=$('.inputDeleteNumber').val();
      	if(deleteNumber!=''){
         currentOrderList.deleteCallBack(deleteNumber);
@@ -699,7 +698,7 @@ $(function(){
     $('.linkedQueueInit').click(function(){
         var length=$('.qInputLength').val();
         if(length!=''){
-            alert(length);
+            // alert(length);
             currentLinkedQueue.initCallBack(length) ;
         }else{
 
