@@ -126,6 +126,15 @@ Sort.prototype.mergeSortCallBack = function(event) {
 
 // 初始化数组
 Sort.prototype.initArray = function(value) {
+	value = parseInt(value);
+	if (isNaN(value)) {
+		this.cmd('SetState', '数组长度应介于2-30。');
+		return this.commands;
+	}
+	if (value < 2 || value > 30) {
+		this.cmd('SetState', '数组长度应介于2-30。');
+		return this.commands;
+	}
     if(this.flag){
 		for(var j=0;j<this.maxSize;j++){
 		this.cmd("DELETE",this.arrayList[j].objectID);

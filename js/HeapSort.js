@@ -44,6 +44,8 @@ Sort.prototype.initAttributes = function() {
 	this.startY = 150 ; // 开始的y坐标
 	this.startArrayY = 130 ; // 开始的数组的y坐标
 	this.startLabelY=400;//标签的y坐标
+	this.heapStartX = 400;
+	this.heapStartY = 200;
 	// 初始化状态框
 	// this.implementAction(this.initStateBox.bind(this), "start");
 }
@@ -82,9 +84,32 @@ Sort.prototype.HeapSortCallBack = function(event) {
 	this.implementAction(this.HeapSort.bind(this),this.maxSize);
 }
 
+Sort.prototype.clearCanvas = function() {
+	if (this.arrayList != null) {
+		for (var i=0; i<this.arrayList.length; i++) {
+			if (this.arrayList[i] != null) {
+				this.cmd('Delete', this.arrayList[i].objectID);
+			}
+		}
+		this.arrayList = null;
+	}
+	this.arrayData = null;
+	this.maxSize = 0;
+}
+
 
 // 初始化数组
 Sort.prototype.initArray = function(value) {
+	value = parseInt(value);
+	if (isNaN(value)) {
+		this.cmd('SetState', '数组长度应介于2-24。');
+		return this.commands;
+	}
+	if (value < 2 || value > 24) {
+		this.cmd('SetState', '数组长度应介于2-24。');
+		return this.commands;
+	}
+	this.clearCanvas();
     this.maxSize=value;
 	this.arrayList = new Array(value) ; // 数组框
 	this.arrayData =new Array(value) ; 
@@ -108,8 +133,6 @@ Sort.prototype.initArray = function(value) {
 			this.cmd("SetBackgroundColor", this.arrayList[i].objectID, '#FFFFFF') ;
 		}
 	}
-	//this.cmd("Step") ;
-	
 	this.cmd("Step") ;
 	
 	return this.commands ;
@@ -120,7 +143,7 @@ Sort.prototype.HeapSort = function(value) {
     this.cmd("SetState","将数组展开呈堆形");
 	this.cmd("Step");
 	this.MoveToStart();//将数组展开呈堆形
-    //this.connect(); //连接父子关系
+    // this.connect(); //连接父子关系
 	this.BulidHeap();//建堆
 	var arraySize=this.maxSize;
 	for(var i=this.maxSize-1;i>0;i--)
@@ -216,8 +239,8 @@ Sort.prototype.MoveToStart=function(){
 		row= - (this.power(2,j)-1)/2;
 		for(k=this.power(2,j)-1;(k<this.power(2,j+1)-1) && k<this.maxSize;k++)
 		{
-			this.arrayList[k].x=200+row*50;
-			this.arrayList[k].y=200+j*50;
+			this.arrayList[k].x=this.heapStartX+row*50;
+			this.arrayList[k].y=this.heapStartY+j*50;
 			this.cmd("Move", this.arrayList[k].objectID, this.arrayList[k].x, this.arrayList[k].y) ;
 		    this.cmd("Step");
 			row++;

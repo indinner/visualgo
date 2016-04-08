@@ -102,6 +102,11 @@ PatternMatch.prototype.KMPmatchCallBack = function(event) {
 
 // 初始化模式串
 PatternMatch.prototype.initPattern = function(pattern) {
+	pattern = pattern.trim();
+	if (pattern.length > 16 || pattern.length <=0) {
+		this.cmd('SetState', '模式串的长度应介于1-16。');
+		return this.commands;
+	} 
 	//清空模式串原有内容
 	if(this.patterntime == true )
 	{
@@ -142,6 +147,11 @@ PatternMatch.prototype.initPattern = function(pattern) {
 
 // 初始化目标串
 PatternMatch.prototype.initTarget = function(target) {
+	target = target.trim();
+	if (target.length > 16 || target.length <= 0) {
+		this.cmd('SetState', '目标串的长度应介于1-16。');
+		return this.commands;
+	}
 	//清空目标串原有内容
 	if(this.targettime == true )
 	{

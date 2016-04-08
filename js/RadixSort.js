@@ -81,9 +81,39 @@ Sort.prototype.radixSortCallBack = function(event) {
 	this.implementAction(this.RadixSort.bind(this),this.maxSize);
 }
 
+Sort.prototype.clearCanvas = function() {
+	if (this.arrayList != null) {
+		for (var i=0; i<this.arrayList.length; i++) {
+			if (this.arrayList[i] != null) {
+				this.cmd('Delete', this.arrayList[i].objectID);
+			}
+		}
+		this.arrayList = null;
+	}
+	if (this.labelArr != null) {
+		for (var i=0; i<this.labelArr.length; i++) {
+			if (this.labelArr[i] != null) {
+				this.cmd('Delete', this.labelArr[i].objectID);
+			}
+		}
+		this.labelArr = null;
+	}
+	this.arrayData = null;
+	this.maxSize = 0;
+}
 
 // 初始化数组
 Sort.prototype.initArray = function(value) {
+	value = parseInt(value);
+	if (isNaN(value)) {
+		this.cmd('SetState', '数组长度应介于2-24。');
+		return this.commands;
+	}
+	if (value < 2 || value > 24) {
+		this.cmd('SetState', '数组长度应介于2-24。');
+		return this.commands;
+	}
+	this.clearCanvas();
     this.maxSize=value;
 	this.arrayList = new Array(value) ; // 数组框
 	this.arrayData =new Array(value) ; 

@@ -73,45 +73,50 @@ Search.prototype.initStateBox = function(state) {
 
 //初始化数组边界
 Search.prototype.initMaxSizeCallBack = function(value) {
-	// var insertValue =this.insertField_maxSize.value;
 	var insertValue = parseInt(value);
 	if (insertValue != "" && !isNaN(insertValue)) {
-		// set text value
-		// this.insertField_maxSize.value = "";
 		this.implementAction(this.initMaxSize.bind(this), insertValue);
 	}
 }
 
 // 初始化数组回调函数
 Search.prototype.initArrayCallBack = function(value) {
-	// var insertValue = this.insertField_value.value;
-	var insertValue = parseInt(value);
-	if (insertValue != "" && !isNaN(insertValue)) {
-		// set text value
-		// this.insertField_value.value = "";
-		this.implementAction(this.initArray.bind(this), insertValue);
+	value = value.trim();
+	if (value == '') {
+		alert('数组内容不能为空。');
+	} else {
+		var arrayContent = this.parseIntSeq(value);
+		for (var i=0; i<arrayContent.length && i<this.maxSize; i++) {
+			this.implementAction(this.initArray.bind(this), arrayContent[i]);
+		}
 	}
+	// var insertValue = parseInt(value);
+	// if (insertValue != "" && !isNaN(insertValue)) {
+	// 	this.implementAction(this.initArray.bind(this), insertValue);
+	// }
 }
 
 // 初始化查找数字回调函数
 Search.prototype.initNumberCallBack = function(value) {
-	// var insertValue = this.insertField_number.value;
-	var insertValue = parseInt(value);
-	if (insertValue != "" && !isNaN(insertValue)) {
-		// set text value
-		// this.insertField_number.value = "";
-		this.implementAction(this.initNumber.bind(this), insertValue);
-	}
+	this.implementAction(this.initNumber.bind(this), value);
 }
 
 // 查找回调函数
 Search.prototype.linearSearchCallBack = function(value) {
+	value = parseInt(value);
+	if (isNaN(value)) {
+		alert('请输入查找的“数字”。');
+	}
 	this.initNumberCallBack(value);
 	this.implementAction(this.linearSearch.bind(this), 0);
 }
 
 // binary search
 Search.prototype.binarySearchCallBack = function(value) {
+	value = parseInt(value);
+	if (isNaN(value)) {
+		alert('请输入查找的“数字”。');
+	}
 	this.initNumberCallBack(value);
 	this.implementAction(this.binarySearch.bind(this), 0);
 }
@@ -119,7 +124,7 @@ Search.prototype.binarySearchCallBack = function(value) {
 //初始化数组边界
 Search.prototype.initMaxSize = function(maxSize) {
 	if (maxSize > 10 || maxSize < 3) {
-		this.cmd("SetState", "数组大小不能超过10，不能小于3");
+		this.cmd("SetState", "数组大小应介于3-10。");
 		return this.commands;
 	}
 	/*if(arraytimer == true){
@@ -339,6 +344,34 @@ Search.prototype.binarySearch = function() {
 	}
 	return this.commands;
 }
+
+Search.prototype.parseIntSeq = function(value) {
+	var intSeq = new Array();
+	var stopChar = new Set([' ', ',', '.', ';', '-', ':', '/', '，', '。', '；', '：', '、']);
+	var start = 0;
+	var end = 0;
+	for (var i=0; i<value.length; i++) {
+		if (stopChar.has(value[i])) {
+			end = i-1;
+			if(end >= start) {
+				var val = parseInt(value.substr(start, end-start+1));
+				if (!isNaN(val)) {
+					intSeq.push(val);
+				}
+			}
+			start = i+1;
+		}
+	}
+	end = value.length-1;
+	if (end >= start) {
+		var val = parseInt(value.substr(start, end-start+1));
+		if (!isNaN(val)) {
+			intSeq.push(val);
+		}
+	}
+	return intSeq;
+}
+
 
 // 顺序表的节点
 var SearchNode = function(objectID, value, x, y) {
