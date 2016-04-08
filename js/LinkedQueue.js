@@ -68,14 +68,17 @@ LinkedQueue.prototype.popCallBack = function(value) {
 
 // 插入回调函数
 LinkedQueue.prototype.insertCallBack = function(seq, value) {
-	if (seq != "" && value != "")
-	{
+	seq = parseInt(seq);
+	value = value.trim();
+	if (value != '') {
 		if(this.head.value <= 5) {
 			this.implementAction(this.insertNode.bind(this), [seq, value]);
 		}
 		else {
 			alert("链表的长度应6以下");
 		}
+	} else {
+		alert('入队元素不能为空');
 	}
 }
 

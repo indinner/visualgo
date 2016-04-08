@@ -73,10 +73,6 @@ Stack.prototype.pushCallBack = function(value) {
 
 // 出栈回调函数
 Stack.prototype.popCallBack = function() {
-	if (this.stack == null) {
-		this.cmd("SetState", "请先初始化数组");
-		return;
-	}
 	this.implementAction(this.popNode.bind(this), 0);
 }
  
@@ -117,10 +113,11 @@ Stack.prototype.initArray = function(maxSize) {
 // 入栈
 Stack.prototype.pushNode = function(value) {
 	if (this.stack == null) {
-		alert('stack not init yet!');
-		return commands;
+		this.cmd("SetState", '请先创建栈');
+		return this.commands;
 	}
 	if(this.head >= this.maxSize-1) {
+		this.cmd("SetState", '栈已满，不能继续入栈');
 		alert('Already full!') ;
 	}
 	else {
@@ -161,7 +158,12 @@ Stack.prototype.pushNode = function(value) {
 	
 // 弹栈
 Stack.prototype.popNode = function() {
+	if (this.stack == null) {
+		this.cmd("SetState", '请先创建栈');
+		return this.commands;
+	}
 	if(this.head <= -1) {
+		this.cmd("SetState", '栈已空，不能继续出栈');
 		alert('Already empty!') ;
 	}
 	else {
@@ -190,7 +192,6 @@ Stack.prototype.popNode = function() {
 			//this.head -- ;
 			//this.stack[this.head] = 0;
 		}
-	//alert(this.stack);
 	return this.commands ;
 }
 
