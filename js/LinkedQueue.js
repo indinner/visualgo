@@ -124,7 +124,8 @@ LinkedQueue.prototype.insertNode = function(valueArr) {
 	var value = valueArr[1] ;
 	var point = this.head ;
 	if(pos > this.length || pos <= 0) {
-		alert('Position error! The position is out of range.\nCurrent range ' + 1 +' to '+this.head.value) ;
+		alert("位置错误！位置超出范围。\n当前范围 1-"+this.head.value);
+		// alert('Position error! The position is out of range.\nCurrent range ' + 1 +' to '+this.head.value) ;
 	}
 	else {
 		var newNode = new ListNode(this.objectID, value, this.startX, this.startY, null) ;
@@ -223,7 +224,8 @@ LinkedQueue.prototype.insertNode = function(valueArr) {
 // 删除
 LinkedQueue.prototype.deleteNode = function(pos) {
 	if(pos >= this.length || pos <= 0) {
-		alert('Position error! The position is out of range.\nCurrent range ' + 1 +' to '+this.head.value) ;
+		alert("位置错误！位置超出范围。\n当前范围 1-"+this.head.value);
+		// alert('Position error! The position is out of range.\nCurrent range ' + 1 +' to '+this.head.value) ;
 	}
 	else {
 		this.length -- ;

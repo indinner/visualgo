@@ -560,11 +560,21 @@ Graph.prototype.BFSTraverse = function(startVertex) {
 	this.cmd("CreateHighlightCircle", this.hintHighlightCircleID, this.hintStartX, this.hintStartY, this.radius);
 	this.cmd("SetForegroundColor", this.hintHighlightCircleID, this.highlightColor);
 	this.cmd("SetBackgroundColor", this.hintHighlightCircleID, this.backgroundColor);
+	var visitSeq = [];
 	for (var i=0; i<this.vertexNum; i++) {
 		var toVisit = (startVertex+i)%this.vertexNum;
 		if ( !this.visited[toVisit] ) 
-			this.BFS(toVisit);
+			visitSeq = visitSeq.concat(this.BFS(toVisit));
 	}
+	// console.log(visitSeq);
+	var visitSeqStr = "";
+	for (var i=0; i<visitSeq.length; i++) {
+		if (i!= 0) {
+			visitSeqStr+=","
+		}
+		visitSeqStr+=visitSeq[i]
+	}
+	this.cmd("SetState", "BFS遍历顺序是 "+visitSeqStr);
 	this.cmd("Delete", this.BFSCircleID);
 	this.cmd("Delete", this.hintHighlightCircleID);
 	this.cmd("Step");
@@ -686,10 +696,11 @@ Graph.prototype.BFS = function (startVertex) {
 			}
 			visitSeqStr+=visitSeq[i]
 		}
-		this.cmd("SetState", "BFS遍历顺序是 "+visitSeqStr);
+		// this.cmd("SetState", "BFS遍历顺序是 "+visitSeqStr);
 		// this.cmd("Step");
 		// this.cmd("Step");
 	}
 	this.cmd("Delete", this.BFSParentCircleID);
 	// this.cmd("Delete", this.hintLabelID);
+	return visitSeq;
 }

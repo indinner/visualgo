@@ -118,7 +118,7 @@ Stack.prototype.pushNode = function(value) {
 	}
 	if(this.head >= this.maxSize-1) {
 		this.cmd("SetState", '栈已满，不能继续入栈');
-		alert('Already full!') ;
+		// alert('Already full!') ;
 	}
 	else {
 		this.head ++ ;
@@ -164,7 +164,7 @@ Stack.prototype.popNode = function() {
 	}
 	if(this.head <= -1) {
 		this.cmd("SetState", '栈已空，不能继续出栈');
-		alert('Already empty!') ;
+		// alert('Already empty!') ;
 	}
 	else {
 			// 查找对应位置

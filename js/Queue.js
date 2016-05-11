@@ -131,7 +131,7 @@ Queue.prototype.enQueue = function(value) {
 	}
 	if((this.rear+1)% this.maxSize==this.front) {
 		this.cmd('SetState', "队列已满，不能继续入队");
-		alert('Already full!') ;
+		// alert('Already full!') ;
 	}
 	else {
 		// 出现矩形
@@ -174,7 +174,7 @@ Queue.prototype.deQueue = function() {
 	}
 	if(this.front==this.rear) {
 		this.cmd('SetState', '队列已空，不能继续出队');
-		alert('Already empty!') ;
+		// alert('Already empty!') ;
 	}
 	else {
 		// 查找对应位置
