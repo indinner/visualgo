@@ -285,7 +285,7 @@ PatternMatch.prototype.matching = function() {
 		  {
 		     // 创建状态框
 			{
-		 		this.cmd("SetState","匹配成功");
+		 		this.cmd("SetState","在位置"+(i+1).toString()+"匹配成功");
 				this.cmd("Step");
 			}
 			  break;
@@ -420,7 +420,7 @@ PatternMatch.prototype.KMPmatching = function (){
         }
     }
     if(this.targetArray.length == j){
-        this.cmd("SetState","查找成功，在第"+ parseInt(i - j + 1)+"匹配");
+        this.cmd("SetState","查找成功，在位置"+ parseInt(i - j + 1)+"匹配成功");
         this.cmd("Step");
     }
     else{

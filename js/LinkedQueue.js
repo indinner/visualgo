@@ -223,6 +223,11 @@ LinkedQueue.prototype.insertNode = function(valueArr) {
 	
 // 删除
 LinkedQueue.prototype.deleteNode = function(pos) {
+	console.log('length:'+this.head.value);
+	if (this.head.value <= 0) {
+		this.cmd("SetState", "队列无元素可出队");
+		return this.commands;
+	}
 	if(pos >= this.length || pos <= 0) {
 		alert("位置错误！位置超出范围。\n当前范围 1-"+this.head.value);
 		// alert('Position error! The position is out of range.\nCurrent range ' + 1 +' to '+this.head.value) ;

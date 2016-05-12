@@ -112,7 +112,7 @@ LinkList.prototype.insertNode = function(valueArr) {
 	var value = valueArr[1] ;
 	var point = this.head ;
 	if(pos > this.length || pos <= 0) {
-		alert("位置错误！位置超出范围。\n当前范围 1-"+this.head.value);
+		alert("位置错误！位置超出范围。\n当前范围 1-"+(this.head.value+1).toString());
 		// alert('Position error! The position is out of range.\nCurrent range ' + 1 +' to '+this.head.value) ;
 	}
 	else {
