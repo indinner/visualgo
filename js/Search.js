@@ -56,7 +56,13 @@ Search.prototype.initAttributes = function() {
 	this.startX = 100; // 开始的x坐标
 	this.startY = 150; // 开始的y坐标
 	this.startArrayY = 250; // 开始的数组的y坐标
+	this.implementAction(this.initState.bind(this), "state");
 	// this.implementAction(this.initStateBox.bind(this), "start");
+}
+
+Search.prototype.initState = function() {
+	this.cmd("SetState", "数组内容只允许输入数字，以空格和逗号分隔");
+	return this.commands;
 }
 
 // 初始化状态框
