@@ -1636,9 +1636,12 @@ $(function(){
 		if(canAutoPlay == 1){
         	currentBT2T.autoBTreeToTree();
 			canInsert = 0;
+            canAutoPlay = 0;
 		}
 		else{
-			alert("请刷新");
+			// alert("请刷新");
+            init();
+            currentBT2T.autoBTreeToTree();
 		}
     });
 
@@ -1693,8 +1696,11 @@ $(function(){
 		if(canAuto == 1){
 	        currentHuffman.autoCreateHuffmanTree();
 			canInsert = 0;
+            canAuto = 0;
 		}else{
-			alert("请刷新");
+			// alert("请刷新");
+            init();
+            currentHuffman.autoCreateHuffmanTree();
 		}
     });
     
@@ -1760,9 +1766,12 @@ $(function(){
 		if(canAuto == 1){
 	        currentThrdBTree.autoThrdBTree();
 			canThrd = 0;
+            canAuto = 0;
 		}
 		else{
-			alert("请刷新");
+			// alert("请刷新");
+            init();
+            currentThrdBTree.autoThrdBTree();
 		}
     });
 });
