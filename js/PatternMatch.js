@@ -102,6 +102,11 @@ PatternMatch.prototype.KMPmatchCallBack = function(event) {
 
 // 初始化模式串
 PatternMatch.prototype.initPattern = function(pattern) {
+	pattern = pattern.trim();
+	if (pattern.length > 16 || pattern.length <=0) {
+		this.cmd('SetState', '模式串的长度应介于1-16。');
+		return this.commands;
+	} 
 	//清空模式串原有内容
 	if(this.patterntime == true )
 	{
@@ -142,6 +147,11 @@ PatternMatch.prototype.initPattern = function(pattern) {
 
 // 初始化目标串
 PatternMatch.prototype.initTarget = function(target) {
+	target = target.trim();
+	if (target.length > 16 || target.length <= 0) {
+		this.cmd('SetState', '目标串的长度应介于1-16。');
+		return this.commands;
+	}
 	//清空目标串原有内容
 	if(this.targettime == true )
 	{
@@ -275,7 +285,7 @@ PatternMatch.prototype.matching = function() {
 		  {
 		     // 创建状态框
 			{
-		 		this.cmd("SetState","匹配成功");
+		 		this.cmd("SetState","在位置"+(i+1).toString()+"匹配成功");
 				this.cmd("Step");
 			}
 			  break;
@@ -410,7 +420,7 @@ PatternMatch.prototype.KMPmatching = function (){
         }
     }
     if(this.targetArray.length == j){
-        this.cmd("SetState","查找成功，在第"+ parseInt(i - j + 1)+"匹配");
+        this.cmd("SetState","查找成功，在位置"+ parseInt(i - j + 1)+"匹配成功");
         this.cmd("Step");
     }
     else{

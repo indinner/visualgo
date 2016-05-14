@@ -27,11 +27,11 @@
   + 二叉树转森林
   + 线索树
 - 图
-  + DFS
-  + BFD
-  + Prime
-  + Kruskal
-  + Dijkstra
+  + DFS广度遍历
+  + BFD深度遍历
+  + Prime最小生成树
+  + Kruskal最小生成树
+  + Dijkstra最短路径
 - 排序
   + 比较排序
   + 基数排序

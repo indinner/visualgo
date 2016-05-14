@@ -151,11 +151,13 @@ OrderList.prototype.insertNode = function(valueArr) {
 	var value = valueArr[1] ;
 	var newNode;
 	if(this.head >= this.maxSize-1) {
-		alert('Already full!') ;
+		// alert('Already full!') ;
+		this.cmd("SetState", "顺序表已满，无法插入！");
 	}
 	else {
-		if(pos > this.head+1) {
-			alert('Position error!') ;
+		if(pos > this.head+1 || pos < 0) {
+			this.cmd("SetState", "位置错误！");
+			// alert('Position error!') ;
 		}
 		else {
 			this.head ++ ;
@@ -242,11 +244,13 @@ OrderList.prototype.insertNode = function(valueArr) {
 // 删除
 OrderList.prototype.deleteNode = function(pos) {
 	if(this.head <= -1) {
-		alert('Already empty!') ;
+		// alert('Already empty!') ;
+		this.cmd("SetState", "顺序表已空，无法删除！");
 	}
 	else {
-		if(pos > this.head) {
-			alert('Position error!') ;
+		if(pos > this.head || pos < 0) {
+			this.cmd("SetState", "位置错误！");
+			// alert('Position error!') ;
 		}
 		else {
 			// 查找对应位置

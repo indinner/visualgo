@@ -8,8 +8,6 @@ function init() {
 	currentFactorial = new Factorial(animationManager, drawing.width, drawing.height) ;
 }
 
-var MAXVALUE = 10;
-
 // 阶乘
 var Factorial = function(animManager, width, height) {
 	this.init(animManager, width, height) ;
@@ -76,9 +74,14 @@ Factorial.prototype.factorialCallBack = function(value) {
 
 // 阶乘函数
 Factorial.prototype.CalFactorial = function(value) {
-	//alert(value);
+	var MINVALUE = 1;
+	var MAXVALUE = 10;
 	if (value > MAXVALUE) {
-		alert("too big");
+		alert("输入数值过大，页面无法显示！（请输入"+MINVALUE+"-"+MAXVALUE+"）");
+		return this.commands;
+	}
+	if (value < MINVALUE) {
+		alert("输入数值过小，页面无法显示！（请输入"+MINVALUE+"-"+MAXVALUE+"）");
 		return this.commands;
 	}
 	// 第n(n>1)次运行需要把之前留下的矩形去掉

@@ -70,10 +70,6 @@ Queue.prototype.initCallBack = function(length) {
 
 // 入队回调函数
 Queue.prototype.pushCallBack = function(value) {
-	if (this.queue == null) {
-		this.cmd("请先初始化数组");
-		return;
-	}
 	if (value.trim() != "") {
 		this.implementAction(this.enQueue.bind(this), value);
 	}
@@ -81,10 +77,6 @@ Queue.prototype.pushCallBack = function(value) {
 
 // 出队回调函数
 Queue.prototype.popCallBack = function() {
-	if (this.queue == null) {
-		this.cmd("请先初始化数组");
-		return;
-	}
 	this.implementAction(this.deQueue.bind(this), 0);
 }
 
@@ -92,14 +84,15 @@ Queue.prototype.clearCanvas = function() {
 	// 清空数组
 	if(this.queue != null && this.queue != undefined) {
 		for(var i=0 ; i<this.queue.length ; i++) {
-			this.cmd("Delete", this.queue[i].objectID) ;
+			if (this.queue[i] != null) {
+				this.cmd("Delete", this.queue[i].objectID) ;
+			}
 		}
 		this.queue = null ;
 	}
 	// 清空元素
 	if(this.orderObjectID != null && this.orderObjectID!= undefined) {
 		for(var i=0 ; i<this.orderObjectID.length ; i++) {
-
 			this.cmd("Delete", this.orderObjectID[i]) ;
 		}
 		this.orderObjectID = null ;
@@ -119,7 +112,7 @@ Queue.prototype.initArray = function(maxSize) {
 		this.cmd("SetState", "创建大小为"+this.maxSize+"的数组") ;
 	} 
 	for(var i=0 ; i<this.maxSize ; i++) {
-		this.orderObjectID[i] = i ;
+		this.orderObjectID[i] = this.objectID;
 		this.cmd("CreateRectangle", this.objectID, "", this.width, this.height, 
 			'center', 'center', parseInt(this.startX+i*(this.width-1)), this.startArrayY) ;
 		this.cmd("SetForegroundColor", this.objectID, this.foregroundColor) ;
@@ -128,15 +121,18 @@ Queue.prototype.initArray = function(maxSize) {
 		this.objectID ++ ;
 	}
 	return this.commands ;
-	
 }
 	
 // 插入
 Queue.prototype.enQueue = function(value) {
-	if((this.rear+1)% this.maxSize==this.front) {
-		alert('Already full!') ;
+	if (this.queue == null) {
+		this.cmd("SetState", "请先创建队列");
+		return this.commands;
 	}
-	
+	if((this.rear+1)% this.maxSize==this.front) {
+		this.cmd('SetState', "队列已满，不能继续入队");
+		// alert('Already full!') ;
+	}
 	else {
 		// 出现矩形
 		{
@@ -157,11 +153,10 @@ Queue.prototype.enQueue = function(value) {
 			this.cmd("SetHighlight", this.orderObjectID[this.rear], false) ;
 			this.cmd("Step") ;
 		}
-		this.orderObjectID[this.rear] = this.objectID ;
-		this.queue[this.rear] = value ;
+		this.queue[this.rear] = new QueueNode(this.objectID, value, this.startX+this.rear*(this.width-1), this.startArrayY);
 		// 新生成的节点插入
 		{
-			this.cmd("Move", this.orderObjectID[this.rear], this.startX+this.rear*(this.width-1) ,this.startArrayY) ;
+			this.cmd("Move", this.queue[this.rear].objectID, this.queue[this.rear].x, this.queue[this.rear].y) ;
 			this.cmd("Step") ;
 		}
 		this.objectID ++ ;
@@ -173,20 +168,25 @@ Queue.prototype.enQueue = function(value) {
 	
 // 删除
 Queue.prototype.deQueue = function() {
+	if (this.queue == null) {
+		this.cmd("SetState", "请先创建队列");
+		return this.commands;
+	}
 	if(this.front==this.rear) {
-		alert('Already empty!') ;
+		this.cmd('SetState', '队列已空，不能继续出队');
+		// alert('Already empty!') ;
 	}
 	else {
 		// 查找对应位置
 		{
-			this.cmd("SetState", "在数组"+this.front+"位置删除新元素"+this.queue[this.front]) ;
+			this.cmd("SetState", "在数组"+this.front+"位置删除新元素"+this.queue[this.front].value) ;
 			this.cmd("Step") ;
-			this.cmd("SetHighlight", this.orderObjectID[this.front], true) ;
+			this.cmd("SetHighlight", this.queue[this.front].objectID, true) ;
 			this.cmd("Step") ;
-			this.cmd("SetHighlight", this.orderObjectID[this.front], false) ;
+			this.cmd("SetHighlight", this.queue[this.front].objectID, false) ;
 			this.cmd("Step") ;
 		}
-		var deleteObjectID = this.orderObjectID[this.front] ;
+		var deleteObjectID = this.queue[this.front].objectID;
 		//出队列 
 		{
 			this.cmd("Move", deleteObjectID, this.startX ,this.startY) ;
@@ -196,6 +196,7 @@ Queue.prototype.deQueue = function() {
 		    this.cmd("SetState", "删除成功") ;
 			this.cmd("Step") ;
 		}
+		this.queue[this.front] = null;
 		this.front=(this.front+1) % this.maxSize ;
 	}
 	return this.commands ;
