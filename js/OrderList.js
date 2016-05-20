@@ -101,6 +101,13 @@ OrderList.prototype.clearCanvas = function() {
 		}
 		this.arrayList = null ;
 	}
+	// clear pos label
+	if(this.arrayListLabel != null && this.arrayListLabel != undefined) {
+		for(var i=0 ; i<this.arrayListLabel.length ; i++) {
+			this.cmd("Delete", this.arrayListLabel[i].objectID) ;
+		}
+		this.arrayListLabel = null ;
+	}
 	// 清空元素
 	if(this.orderList != null && this.orderList != undefined) {
 		for(var i=0 ; i<this.orderList.length ; i++) {
@@ -124,6 +131,7 @@ OrderList.prototype.initArray = function(maxSize) {
 	this.head = -1;
 	this.maxSize = parseInt(maxSize) ; // 数组最大容量
 	this.arrayList = new Array(this.maxSize) ; // 数组框
+	this.arrayListLabel = new Array(this.maxSize); // pos label
 	this.orderList = new Array(this.maxSize) ; // 顺序表数组
 	// 设置状态栏
 	{
@@ -140,6 +148,13 @@ OrderList.prototype.initArray = function(maxSize) {
 			this.cmd("SetForegroundColor", this.arrayList[i].objectID, this.foregroundColor) ;
 			this.cmd("SetBackgroundColor", this.arrayList[i].objectID, '#FFFFFF') ;
 		}
+		// create pos label
+		this.arrayListLabel[i] = new OrderListNode(this.objectID, i, parseInt(this.startX+i*(this.width-1)), this.startArrayY+40);
+		this.objectID ++;
+		this.cmd("CreateLabel", this.arrayListLabel[i].objectID, this.arrayListLabel[i].value, this.arrayListLabel[i].x, this.arrayListLabel[i].y);
+		this.cmd("SetForegroundColor", this.arrayListLabel[i].objectID, this.foregroundColor);
+		this.cmd("SetBackgroundColor", this.arrayListLabel[i].objectID, '#FFFFFF');
+		
 	}
 	this.cmd("Step");
 	return this.commands;
