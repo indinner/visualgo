@@ -140,6 +140,13 @@ Sort.prototype.initArray = function(value) {
 		this.cmd("DELETE",this.arrayList[j].objectID);
 	   }
 	}	
+	if (this.circleList != null) {
+		for (var i=0; i<this.circleList.length; i++) {
+			if (this.circleList[i] != null) {
+				this.cmd("DELETE", this.circleList[i].objectID);
+			}
+		}
+	}
 	this.maxSize=value;
 	this.arrayList = new Array(value) ; // 数组框
 	this.arrayData =new Array(value) ;
@@ -235,7 +242,9 @@ Sort.prototype.insertSort = function(value) {
 
 // 冒泡排序
 Sort.prototype.bubbleSort = function(value) {
+	var flag = 1; // is sorted
     for(var i=value;i<this.maxSize-1;i++){
+    	flag = 1;
 	    this.cmd("SetState", "第"+(i+1)+"轮排序") ;
 		this.cmd("Step") ;
 	    for(var j=this.maxSize-1;j>i;j--){
@@ -247,11 +256,17 @@ Sort.prototype.bubbleSort = function(value) {
 			 
 		     if(this.arrayList[j-1].value>this.arrayList[j].value){
 			       this.swap(j-1,j);  
+			       flag = 0;
 			 }
 			 this.cmd("SetForegroundColor", this.arrayList[j].objectID, this.foregroundColor) ;//取消待排序元素
 		     this.cmd("SetBackgroundColor", this.arrayList[j].objectID, '#FFFFFF') ;
 		     this.cmd("SetForegroundColor", this.arrayList[j-1].objectID, this.foregroundColor) ;//取消待排序元素
 		     this.cmd("SetBackgroundColor", this.arrayList[j-1].objectID, '#FFFFFF') ;
+		}
+		// the array is sorted
+		if (flag == 1) {
+			this.cmd("SetState", "数组已排序完成");
+			break;
 		}
 		this.cmd("SetForegroundColor", this.arrayList[i].objectID, this.foregroundColor) ;
 		this.cmd("SetBackgroundColor", this.arrayList[i].objectID, this.backgroundColor) ;
