@@ -49,7 +49,8 @@ BinarySearchTree.prototype.initAttributes = function() {
 	this.palegreen = '#32CD32' ; // palegreen色
 	this.startX = 100 ; // 新节点的x坐标
 	this.startY = 150 ; // 新节点的y坐标
-	this.startRootX = 500 ; // 根结点的x坐标
+	this.startRootX = 500; // 根结点的x坐标
+	this.array = [];
 	// 初始化状态框
 	// this.implementAction(this.initStateBox.bind(this), "start");
 }
@@ -67,13 +68,35 @@ BinarySearchTree.prototype.initStateBox = function(state) {
 }
 
 // 插入回调函数
-BinarySearchTree.prototype.insertCallBack = function(value) {
-	var insertValue = parseInt(value);
-	if (insertValue != "" && !isNaN(insertValue))
-	{
-		// set text value
-		// this.insertField.value = "";
-		this.implementAction(this.insertNode.bind(this), insertValue);
+BinarySearchTree.prototype.insertCallBack = function (value) {
+	var lligle = true;
+	if (value.length == 0) {
+		lligle = false;
+	}
+	for (var i = 0; i < value.length; i++) {
+		if (value.charAt(i) > '9' || value.charAt(i) < '0') {
+			alert('必须输入整数');
+			lligle = false;
+		}
+	}
+	// alert(lligle);
+	if (lligle == true) {
+		var insertValue = parseInt(value);
+		var isExist = false;
+		for (var i=0; i < this.array.length; i++) {
+			if (this.array[i] == insertValue) {
+				isExist = true;
+				break;
+			}
+		}
+		// alert(isExist);
+		if (isExist == true) {
+			alert('该数字已经出现');
+		}
+		else {
+			this.implementAction(this.insertNode.bind(this), insertValue);
+			this.array.push(insertValue);
+		}
 	}
 }
 
