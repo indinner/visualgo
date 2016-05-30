@@ -7,8 +7,8 @@ function ObjectManager() {
 	
 	this.context = document.getElementById("drawing").getContext("2d") ; // 画布
 	this.framenum = 0 ; // 当前帧数
-	this.height = 500 ; // 画布高度
-	this.width = 500 ; // 画布宽度
+	this.height = 1000 ; // 画布高度
+	this.width = 2000 ; // 画布宽度
 	
 	// 创建一个圆形物体
 	this.addCircleObject = function(objectID, label, radius) {
@@ -225,7 +225,7 @@ function ObjectManager() {
 	// 画图
 	this.draw = function() {
 		// 清空画布
-		this.context.clearRect(0, 0, 1000, 1000) ;
+		this.context.clearRect(0, 0, this.width, this.height);
 		// 循环Nodes画图
 		for(var i=0 ; i<this.Nodes.length ; i++) {
 			if(this.Nodes[i] != null) {

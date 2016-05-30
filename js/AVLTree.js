@@ -41,7 +41,15 @@ AVLTree.prototype.initAttributes = function() {
 	this.palegreen = '#32CD32' ; // palegreen色
 	this.startX = 100 ; // 新节点的x坐标
 	this.startY = 150 ; // 新节点的y坐标
-	this.startRootX = 500 ; // 根结点的x坐标
+	this.startRootX = 500; // 根结点的x坐标
+	this.array = [[3, 2, 1, 4, 5, 6, 7, 16, 15, 14, 13, 12, 11, 10, 8, 9],
+		[7, 4, 2, 1, 3, 6, 5, 13, 11, 9, 8, 10, 12, 15, 14, 16],
+		[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+		[1, 3, 2, 5, 6, 4, 8, 10, 9, 12, 11, 14, 16, 15, 13, 7],
+		[9, 8, 10, 11, 12, 13, 14, 15, 16, 7, 6, 5, 4, 1, 2, 3],
+		[16, 14, 15, 12, 10, 8, 9, 11, 13, 5, 6, 3, 1, 2, 4, 7],
+		[16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+		[7, 13, 15, 16, 14, 11, 12, 9, 10, 8, 4, 6, 5, 2, 3, 1]];
 	// 初始化状态框
 	// this.implementAction(this.initStateBox.bind(this), "start");
 }
@@ -58,6 +66,11 @@ AVLTree.prototype.initStateBox = function(state) {
 	return this.commands ;
 }
 
+// 随机生成回调函数
+AVLTree.prototype.randomAVLCallBack = function (value) {
+	this.implementAction(this.randomAVL.bind(this), 0);
+}
+
 // 插入回调函数
 AVLTree.prototype.insertCallBack = function(value) {
 	var insertValue = parseInt(value);
@@ -67,8 +80,18 @@ AVLTree.prototype.insertCallBack = function(value) {
 	}
 }
 
+// 随机生成
+AVLTree.prototype.randomAVL = function (value) {
+	var index = Math.round(Math.random() * this.array.length) % this.array.length;
+	for (var i = 0; i < this.array[index].length; i++) {
+		this.insertNode(this.array[index][i]);
+	}
+
+	return this.commands
+}
+
 // 插入
-AVLTree.prototype.insertNode = function(value) {
+AVLTree.prototype.insertNode = function (value) {
 	// 如果根节点为空
 	if(this.root == null || this.root == undefined) {
 		this.root = new TreeNode(this.objectID, value, this.startRootX, this.startY, 0, null, null, null) ;
@@ -221,7 +244,7 @@ AVLTree.prototype.insertNode = function(value) {
 		// update position of every points
 		this.resizeTree() ;
 	}
- 	return this.commands ;
+	return this.commands ;
 }
 
 // single right turn method
