@@ -404,7 +404,7 @@ BinarySearchTree.prototype.deleteNode = function(value) {
 							this.cmd("Delete", temp.objectID) ;
 							this.cmd("Step") ;
 						}
-						this.root = null ;
+						this.root = null;
 					}
 					// 如果只有右孩子
 					else if(temp.leftChild == null) {
@@ -414,7 +414,8 @@ BinarySearchTree.prototype.deleteNode = function(value) {
 							this.cmd("Step") ;
 						}
 						var del = temp ;
-						this.root = temp.rightChild ;
+						this.root = temp.rightChild;
+						this.root.parent = null;
 						// 删除节点
 						{
 							this.cmd("Delete", del.objectID) ;
@@ -430,7 +431,8 @@ BinarySearchTree.prototype.deleteNode = function(value) {
 							this.cmd("Step") ;
 						}
 						var del = temp ;
-						this.root = temp.leftChild ;
+						this.root = temp.leftChild;
+						this.root.parent = null;
 						// 删除节点
 						{
 							this.cmd("Delete", del.objectID) ;

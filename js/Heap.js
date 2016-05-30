@@ -292,7 +292,7 @@ Heap.prototype.shiftUp = function(node) {
 	}
 }
 
-// 向上筛选
+// 向下筛选
 Heap.prototype.shiftDown = function(node) {
 	if(node != null) {
 		if(node.leftChild == null && node.rightChild == null) {
@@ -377,7 +377,7 @@ Heap.prototype.shiftDown = function(node) {
 			}
 		}
 		else {
-			if(parseInt(node.rightChild.value) < parseInt(node.leftChild.value) && 
+			if(parseInt(node.rightChild.value) <= parseInt(node.leftChild.value) && 
 			   parseInt(node.rightChild.value) < parseInt(node.value)) {
 				   // 该节点和父节点绿色高亮
 					{
@@ -401,7 +401,7 @@ Heap.prototype.shiftDown = function(node) {
 					}
 					this.shiftDown(node.rightChild) ;
 			}
-			else if(parseInt(node.leftChild.value) < parseInt(node.rightChild.value) && 
+			else if(parseInt(node.leftChild.value) <= parseInt(node.rightChild.value) && 
 			   parseInt(node.leftChild.value) < parseInt(node.value)) {
 				   // 该节点和父节点绿色高亮
 					{
