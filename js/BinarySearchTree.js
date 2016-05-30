@@ -101,24 +101,48 @@ BinarySearchTree.prototype.insertCallBack = function (value) {
 }
 
 // 查找回调函数
-BinarySearchTree.prototype.searchCallBack = function(value) {
-	var insertValue = parseInt(value);
-	if (insertValue != "" && !isNaN(insertValue))
-	{
-		// set text value
-		// this.insertField.value = "";
-		this.implementAction(this.searchNode.bind(this), insertValue);
+BinarySearchTree.prototype.searchCallBack = function (value) {
+	var lligle = true;
+	if (value.length == 0) {
+		lligle = false;
+	}
+	for (var i = 0; i < value.length; i++) {
+		if (value.charAt(i) > '9' || value.charAt(i) < '0') {
+			alert('必须输入整数');
+			lligle = false;
+		}
+	}
+	// alert(lligle);
+	if (lligle == true) {
+		var searchValue = parseInt(value);
+		this.implementAction(this.searchNode.bind(this), searchValue);
 	}
 }
 
 // 删除回调函数
 BinarySearchTree.prototype.deleteCallBack = function(value) {
-	var insertValue = parseInt(value);
-	if (insertValue != "" && !isNaN(insertValue))
-	{
-		// set text value
-		// this.insertField.value = "";
-		this.implementAction(this.deleteNode.bind(this), insertValue);
+	var lligle = true;
+	if (value.length == 0) {
+		lligle = false;
+	}
+	for (var i = 0; i < value.length; i++) {
+		if (value.charAt(i) > '9' || value.charAt(i) < '0') {
+			alert('必须输入整数');
+			lligle = false;
+		}
+	}
+	// alert(lligle);
+	if (lligle == true) {
+		// alert(this.array);
+		var deleteValue = parseInt(value);
+		this.implementAction(this.deleteNode.bind(this), deleteValue);
+		for (var i = 0; i < this.array.length; i++) {
+			if (this.array[i] == deleteValue) {
+				this.array.splice(i, 1);
+				break;
+			}
+		}
+		// alert(this.array);
 	}
 }
 
