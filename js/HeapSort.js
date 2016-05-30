@@ -44,7 +44,7 @@ Sort.prototype.initAttributes = function() {
 	this.startY = 150 ; // 开始的y坐标
 	this.startArrayY = 130 ; // 开始的数组的y坐标
 	this.startLabelY=400;//标签的y坐标
-	this.heapStartX = 400;
+	this.heapStartX = 800;
 	this.heapStartY = 200;
 	// 初始化状态框
 	// this.implementAction(this.initStateBox.bind(this), "start");
@@ -241,7 +241,7 @@ Sort.prototype.MoveToStart=function(){
 		row= - (this.power(2,j)-1)/2;
 		for(k=this.power(2,j)-1;(k<this.power(2,j+1)-1) && k<this.maxSize;k++)
 		{
-			this.arrayList[k].x=this.heapStartX+row*50;
+			this.arrayList[k].x=this.heapStartX+row*25*Math.pow(2, i-j);
 			this.arrayList[k].y=this.heapStartY+j*50;
 			this.cmd("Move", this.arrayList[k].objectID, this.arrayList[k].x, this.arrayList[k].y) ;
 			this.cmd("Step");
