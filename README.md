@@ -29,7 +29,7 @@
 - 图
   + DFS广度遍历
   + BFD深度遍历
-  + Prime最小生成树
+  + Prim最小生成树
   + Kruskal最小生成树
   + Dijkstra最短路径
 - 排序
