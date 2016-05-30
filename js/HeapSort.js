@@ -161,11 +161,10 @@ Sort.prototype.HeapSort = function(value) {
 	this.cmd("SetBackgroundColor",this.arrayList[0].objectID,this.backgroundColor) ;
 	this.cmd("Step");
 	
-	for(var j=0;j<arraySize;j++)
-	{
+	for (var j = 0; j < arraySize; j++) {
 		this.arrayList[j].x=parseInt(this.startX+j*(this.width));
 		this.arrayList[j].y=this.startArrayY;
-		this.cmd("Move", this.arrayList[j].objectID, this.arrayList[j].x, this.arrayList[j].y) ;
+		this.cmd("Move", this.arrayList[j].objectID, this.arrayList[j].x, this.arrayList[j].y);
 		this.cmd("Step");
 	}
     return this.commands;
@@ -179,7 +178,8 @@ Sort.prototype.BulidHeap=function(){
 	}
 }
 //向下调整
-Sort.prototype.SiftDown=function(left){
+Sort.prototype.SiftDown = function (left) {
+
     this.cmd("SetState","向下调整堆");
 	this.cmd("Step");
 	var i=left;
@@ -206,7 +206,7 @@ Sort.prototype.SiftDown=function(left){
 	}
 }
 //交换元素
-Sort.prototype.swap=function(index1,index2){
+Sort.prototype.swap = function (index1, index2) {
 	
 	var distanceX=this.arrayList[index2].x-this.arrayList[index1].x;
 	var distanceY=this.arrayList[index2].y-this.arrayList[index1].y;
@@ -216,14 +216,16 @@ Sort.prototype.swap=function(index1,index2){
 	this.arrayList[index1]=minNode;
 	
 	this.arrayList[index2].x+=distanceX;
-	this.arrayList[index2].y+=distanceY;
+	this.arrayList[index2].y += distanceY;
+
 	this.cmd("Move", this.arrayList[index2].objectID, this.arrayList[index2].x, this.arrayList[index2].y) ;
 	
 	this.arrayList[index1].x-=distanceX;
 	this.arrayList[index1].y-=distanceY;
-	this.cmd("Move", this.arrayList[index1].objectID, this.arrayList[index1].x, this.arrayList[index1].y) ;
-    this.cmd("Step") ;
+	this.cmd("Move", this.arrayList[index1].objectID, this.arrayList[index1].x, this.arrayList[index1].y);
+	this.cmd("Step");
 }
+
 Sort.prototype.MoveToStart=function(){
 	
 	var row=0;
@@ -242,10 +244,18 @@ Sort.prototype.MoveToStart=function(){
 			this.arrayList[k].x=this.heapStartX+row*50;
 			this.arrayList[k].y=this.heapStartY+j*50;
 			this.cmd("Move", this.arrayList[k].objectID, this.arrayList[k].x, this.arrayList[k].y) ;
-		    this.cmd("Step");
+			this.cmd("Step");
 			row++;
 		}
 	}
+	/*
+	for (k = 1; k < this.maxSize; k++) {
+		if (k != 0) {
+			this.cmd("Connect", this.arrayList[k].objectID, this.arrayList[Math.floor((k - 1) / 2)].objectID, '#FF6347');
+		}
+	}
+	this.cmd("Step");
+	*/
 	return this.commands ;
 }
 Sort.prototype.power=function(m,n){
