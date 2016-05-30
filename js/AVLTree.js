@@ -39,9 +39,9 @@ AVLTree.prototype.initAttributes = function() {
 	this.backgroundColor = '#B0E0E6' ; // 背景色
 	this.tomato = '#FF6347' ; // tomato色
 	this.palegreen = '#32CD32' ; // palegreen色
-	this.startX = 100 ; // 新节点的x坐标
+	this.startX = 600 ; // 新节点的x坐标
 	this.startY = 150 ; // 新节点的y坐标
-	this.startRootX = 500; // 根结点的x坐标
+	this.startRootX = 800; // 根结点的x坐标
 	this.array = [[3, 2, 1, 4, 5, 6, 7, 16, 15, 14, 13, 12, 11, 10, 8, 9],
 		[7, 4, 2, 1, 3, 6, 5, 13, 11, 9, 8, 10, 12, 15, 14, 16],
 		[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
