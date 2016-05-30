@@ -1452,6 +1452,7 @@ $(function(){
 	*/
 	// 随机生成
 	$('.avlAction').click(function(){
+		init();
         currentAVLTree.randomAVLCallBack();
 	});
 
