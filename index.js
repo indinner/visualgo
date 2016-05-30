@@ -209,6 +209,12 @@ $(function(){
         $(this).css('background','rgb(89, 229, 89)');
     });
 
+    $('.subD1').mouseenter(function(){
+        $(this).css('background','black');
+    }).mouseleave(function(){
+        $(this).css('background','rgb(89, 229, 89)');
+    });
+
     $('.subH1').mouseenter(function(){
         $(this).css('background','black');
     }).mouseleave(function(){
@@ -1637,7 +1643,7 @@ $(function(){
         currentBT2T.newButtonCallBack();
     });
 	//自动演示
-	$('#autoBT2T').click(function(){
+	/*$('#autoBT2T').click(function(){
 		//alert("Inner function2 canAutoPlay" + canAutoPlay);
 		if(canAutoPlay == 1){
         	currentBT2T.autoBTreeToTree();
@@ -1649,6 +1655,19 @@ $(function(){
             init();
             currentBT2T.autoBTreeToTree();
 		}
+    });*/
+    
+    // 自动演示
+    $('.BT2TAction').click(function(){
+        init();
+        currentBT2T.autoBTreeToTree();
+        currentBT2T.changeButtonCallBack("bTree");
+    });
+
+    $('.T2BTAction').click(function(){
+        init();
+        currentBT2T.createConstTreeCallBack(0);
+        currentBT2T.changeButtonCallBack("Tree");
     });
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

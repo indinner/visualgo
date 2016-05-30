@@ -62,8 +62,40 @@ Huffman.prototype.initStateBox = function(state) {
 	调用函数this.autoCreateHuffmanTree()实现自动创建Huffman Tree
 */
 Huffman.prototype.autoCreateHuffmanTree = function() {
-	var insertValue = "abcabdahiagaeefigggbhhhbe";
-	this.implementAction(this.createHuffman.bind(this), insertValue);
+	var Range = 10 - 1;
+	var Rand = Math.random();
+	var num = 1 + Math.round(Rand * Range);
+	if(num == 1){
+		var insertValue = "abccfhdjssw.<kl";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 2){
+		var insertValue = "<<?ssdhfd12";
+		this.implementAction(this.createHuffman.bind(this), insertValue);	
+	}else if(num == 3){
+		var insertValue = "$%sshdaac<";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 4){
+		var insertValue = "ddsOPaa";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 5){
+		var insertValue = "@ssa>?KKls";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 6){
+		var insertValue = "sasHHaoOUa";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 7){
+		var insertValue = "~~:d>>dsffj";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 8){
+		var insertValue = "fdhjdds*7ds";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else if(num == 9){
+		var insertValue = "dfhds<>ssJa";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}else{
+		var insertValue = "KLddshj<>a?aas";
+		this.implementAction(this.createHuffman.bind(this), insertValue);
+	}
 }
 // 插入回调函数
 Huffman.prototype.createButtonCallBack = function(text) {

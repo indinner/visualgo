@@ -108,6 +108,22 @@ BT2T.prototype.initStateBox = function(state) {
 */
 BT2T.prototype.autoBTreeToTree = function() {
 	//alert("请刷新当前页面再进行下一步操作");
+	var Range = 5 - 1;
+	var Rand = Math.random();
+	var num = 1 + Math.round(Rand * Range);
+	if(num == 1){
+		this.B2T1();
+	}else if(num == 2){
+		this.B2T2();
+	}else if(num == 3){
+		this.B2T3();
+	}else if(num == 4){
+		this.B2T4();
+	}else{
+		this.B2T5();
+	}
+}
+BT2T.prototype.B2T1 = function(){
 	var startInsertValue;
 	var endInsertValue;
 	var leftOrRight;
@@ -130,7 +146,95 @@ BT2T.prototype.autoBTreeToTree = function() {
 		this.drawbTree();
 	}
 }
-BT2T.prototype.createConstTreeCallBack = function() {
+BT2T.prototype.B2T2 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b','leftChild'];	constArray[1] = ['b','c','leftChild'];
+	constArray[2] = ['b','d','rightChild'];  constArray[3] = ['d','e','leftChild'];
+	constArray[4] = ['e','g','leftChild'];  constArray[5] = ['e','h','rightChild'];
+	constArray[6] = ['h','i','leftChild'];  constArray[7] = ['h','j','rightChild'];
+	constArray[8] = ['d','f','rightChild'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = constArray[i][2];
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawbTree();
+	}
+}
+BT2T.prototype.B2T3 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b','leftChild'];	constArray[1] = ['b','c','leftChild'];
+	constArray[2] = ['b','d','rightChild'];  constArray[3] = ['c','e','leftChild'];
+	constArray[4] = ['c','f','rightChild'];  constArray[5] = ['e','i','leftChild'];
+	constArray[6] = ['e','j','rightChild'];  constArray[7] = ['d','g','leftChild'];
+	constArray[8] = ['d','h','rightChild'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = constArray[i][2];
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawbTree();
+	}
+}
+BT2T.prototype.B2T4 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b','leftChild'];	constArray[1] = ['b','c','leftChild'];
+	constArray[2] = ['b','d','rightChild'];	constArray[3] = ['d','e','leftChild'];
+	constArray[4] = ['d','f','rightChild'];	 constArray[5] = ['f','g','leftChild'];
+	constArray[6] = ['g','h','leftChild'];	constArray[7] = ['g','i','rightChild'];	
+	constArray[8] = ['i','j','rightChild'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = constArray[i][2];
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawbTree();
+	}
+}
+BT2T.prototype.B2T5 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b','leftChild'];	constArray[1] = ['b','c','leftChild'];
+	constArray[2] = ['b','d','rightChild'];  constArray[3] = ['c','e','rightChild'];
+	constArray[4] = ['e','f','leftChild'];  constArray[5] = ['e','g','rightChild'];
+	constArray[6] = ['f','h','rightChild'];  constArray[7] = ['h','i','rightChild'];
+	constArray[8] = ['d','j','rightChild'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = constArray[i][2];
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawbTree();
+	}
+}
+BT2T.prototype.createConstTreeCallBack = function(withStep) {
+	var Range = 5 - 1;
+	var Rand = Math.random();
+	var num = 1 + Math.round(Rand * Range);
+	if(num == 1){
+		this.T2B1();
+	}else if(num == 2){
+		this.T2B2();
+	}else if(num == 3){
+		this.T2B3();
+	}else if(num == 4){
+		this.T2B4();
+	}else{
+		this.T2B5();
+	}
+}
+BT2T.prototype.T2B1 = function(){
 	var startInsertValue;
 	var endInsertValue;
 	var leftOrRight;
@@ -146,6 +250,78 @@ BT2T.prototype.createConstTreeCallBack = function() {
 	constArray[16] = ['j','r'];	constArray[17] = ['j','s'];
 	constArray[18] = ['j','t'];
 	for(var i = 0; i<19;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = "";
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawTree();
+	}
+}
+BT2T.prototype.T2B2 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b'];	constArray[1] = ['a','d'];
+	constArray[2] = ['a','f'];  constArray[3] = ['b','c'];
+	constArray[4] = ['d','e'];  constArray[5] = ['f','g'];
+	constArray[6] = ['f','i'];  constArray[7] = ['f','j'];
+	constArray[8] = ['g','h'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = "";
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawTree();
+	}
+}
+BT2T.prototype.T2B3 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b'];	constArray[1] = ['a','d'];
+	constArray[2] = ['a','f'];  constArray[3] = ['b','c'];
+	constArray[4] = ['d','e'];  constArray[5] = ['d','h'];
+	constArray[6] = ['d','j'];  constArray[7] = ['e','g'];
+	constArray[8] = ['h','i'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = "";
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawTree();
+	}
+}
+BT2T.prototype.T2B4 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b'];	constArray[1] = ['a','d'];
+	constArray[2] = ['a','h'];  
+	constArray[3] = ['b','c'];  constArray[4] = ['b','f'];
+	constArray[5] = ['d','g'];  constArray[6] = ['c','e'];
+	constArray[7] = ['c','j'];  constArray[8] = ['f','i'];
+	for(var i = 0; i<9;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = "";
+		this.implementAction(this.createBT2T.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+		this.drawTree();
+	}
+}
+BT2T.prototype.T2B5 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	constArray[0] = ['a','b'];	constArray[1] = ['a','d'];
+	constArray[2] = ['a','j'];  constArray[3] = ['b','c'];
+	constArray[4] = ['b','e'];  constArray[5] = ['b','g'];
+	constArray[6] = ['e','f'];  constArray[7] = ['e','h'];
+	constArray[8] = ['e','i'];
+	for(var i = 0; i<9;++i){
 		startInsertValue = constArray[i][0];
 		endInsertValue = constArray[i][1];
 		leftOrRight = "";
@@ -186,10 +362,10 @@ BT2T.prototype.createButtonCallBack = function(parentNode,nodePosition,childNode
 BT2T.prototype.newButtonCallBack = function(event) {
 	location.reload();
 }
-BT2T.prototype.changeButtonCallBack = function(event) {
+BT2T.prototype.changeButtonCallBack = function(treeStyle) {
 	// var treeOrBTree = this.treeStyle.value;
-	var treeOrBTree = this.treeStyle;
-	this.alertt(treeOrBTree);
+	// var treeOrBTree = this.treeStyle;
+	this.alertt(treeStyle);
 	// document.getElementById("autoBT2T").disabled = true;
 	// document.getElementById("crButton").disabled = true;
 }
@@ -243,7 +419,7 @@ BT2T.prototype.createBT2T = function() {
 		this.BT2TNodeArray[this.objectID-1] = new BT2TNode(this.objectID, this.objectID, null, x, y, this.objectID-1, startValue);
 		this.cmd("CreateCircle", this.objectID, startValue, this.iniXr, this.iniYr, this.radius) ;
 		this.cmd("SetForegroundColor", this.objectID, this.foregroundColor) ;
-		this.cmd("Step") ;
+		 this.cmd("Step") ;
 		fatherObID = this.BT2TNodeArray[this.objectID-1].objectID;
 		if(lfOrRgt != ""){
 			this.BT2TNodeArray[fatherObID-1].chObIDArray[0] = null;
@@ -259,7 +435,7 @@ BT2T.prototype.createBT2T = function() {
 		this.BT2TNodeArray[this.objectID-1] = new BT2TNode(this.objectID, fatherObID, null, x, y, this.objectID-1, endValue);
 		this.cmd("CreateCircle", this.objectID, endValue, this.iniXc, this.iniYc, this.radius) ;
 		this.cmd("SetForegroundColor", this.objectID, this.foregroundColor) ;
-		this.cmd("Step") ;
+		 this.cmd("Step") ;
 		if(lfOrRgt == ""){
 			this.BT2TNodeArray[fatherObID-1].chObIDArray.push(this.objectID);
 			this.BT2TNodeArray[fatherObID-1].lengthOfChild ++;
@@ -441,7 +617,7 @@ BT2T.prototype.drawTree = function() { // 画图
 	}
 	for(var OMG = 0; OMG < this.BT2TNodeArray.length; OMG++){
 		this.cmd("Move", this.BT2TNodeArray[tempIndexInOrder[OMG]].objectID, xOfTheTree[this.BT2TNodeArray[tempIndexInOrder[OMG]].x], this.BT2TNodeArray[tempIndexInOrder[OMG]].y) ;
-		this.cmd("Step") ;
+		//this.cmd("Step") ;
 	}
 	this.rootArray.length = 0;
 }
@@ -471,14 +647,14 @@ BT2T.prototype.alertt = function(keyWord) {
 			alert("输入二叉树根结点有右孩子，会生成2棵以上的树，请重新输入！");
 			return this.commands ;
 		}
-		alert("二叉树 到 树");
+		//alert("二叉树 到 树");
 		this.bTree2Tree();
 		/*for(var indexK = 0; indexK < this.BT2TNodeArray.length; indexK ++){
 			alert("Value: "+this.BT2TNodeArray[indexK].value+", fa: "+this.BT2TNodeArray[indexK].faObID+", Object: "+this.BT2TNodeArray[indexK].objectID+", index: "+indexK+", child: "+this.BT2TNodeArray[indexK].chObIDArray);//[0]+", child: "+this.BT2TNodeArray[indexK].chObIDArray[1]);
 		}*/	
 	}
 	else if(maxChildOfBT2T > 2 && keyWord == "Tree"){
-		alert("树 到 二叉树");
+		//alert("树 到 二叉树");
 		this.tree2BTree();
 		/*for(var indexK = 0; indexK < this.BT2TNodeArray.length; indexK ++){
 			alert("Value: "+this.BT2TNodeArray[indexK].value+", fa: "+this.BT2TNodeArray[indexK].faObID+", Object: "+this.BT2TNodeArray[indexK].objectID+", index: "+indexK+", leftchild: "+this.BT2TNodeArray[indexK].chObIDArray[0]+", rightchild: "+this.BT2TNodeArray[indexK].chObIDArray[1]);

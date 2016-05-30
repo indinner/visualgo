@@ -164,6 +164,18 @@ thrdBTree.prototype.insertThrdBTree = function() {
 	调用函数this.autoThrdBTree可实现自动生成二叉树，再点击转换按钮即可线索化
 */
 thrdBTree.prototype.autoThrdBTree = function() {
+	var Range = 3 - 1;
+	var Rand = Math.random();
+	var num = 1 + Math.round(Rand * Range);
+	if(num == 1){
+		this.TranTree1();
+	}else if(num == 2){
+		this.TranTree2();
+	}else{
+		this.TranTree3();
+	}
+}
+thrdBTree.prototype.TranTree1 = function(){
 	var startInsertValue;
 	var endInsertValue;
 	var leftOrRight;
@@ -173,6 +185,36 @@ thrdBTree.prototype.autoThrdBTree = function() {
 	constArray[2] = ['b','e','rightChild'];	constArray[3] = ['e','f','rightChild'];
 	constArray[4] = ['a','c','rightChild'];	constArray[5] = ['c','g','leftChild'];
 	for(var i = 0; i<6;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = constArray[i][2];
+		this.implementAction(this.createThrdBTree.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+	}
+}
+thrdBTree.prototype.TranTree2 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	//alert("请刷新当前页面再进行下一步操作");
+	constArray[0] = ['a','b','leftChild'];	constArray[1] = ['b','c','leftChild'];
+	constArray[2] = ['c','d','leftChild'];	constArray[3] = ['d','e','leftChild'];
+	for(var i = 0; i<4;++i){
+		startInsertValue = constArray[i][0];
+		endInsertValue = constArray[i][1];
+		leftOrRight = constArray[i][2];
+		this.implementAction(this.createThrdBTree.bind(this), [startInsertValue, endInsertValue, leftOrRight] );
+	}
+}
+thrdBTree.prototype.TranTree3 = function(){
+	var startInsertValue;
+	var endInsertValue;
+	var leftOrRight;
+	var constArray = [];
+	//alert("请刷新当前页面再进行下一步操作");
+	constArray[0] = ['a','b','rightChild'];	constArray[1] = ['b','c','rightChild'];
+	constArray[2] = ['c','d','rightChild'];	constArray[3] = ['d','e','rightChild'];
+	for(var i = 0; i<4;++i){
 		startInsertValue = constArray[i][0];
 		endInsertValue = constArray[i][1];
 		leftOrRight = constArray[i][2];
