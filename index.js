@@ -1442,13 +1442,18 @@ $(function(){
         };
     });
     //插入
-    $('.avlAction').click(function(){
+    /*$('.avlAction').click(function(){
         var avlNum=$('.avlNumber').val();
         if(avlNum){
             currentAVLTree.insertCallBack(avlNum);
             $('.avlNumber').val('');
         }
     });
+	*/
+	// 随机生成
+	$('.avlAction').click(function(){
+        currentAVLTree.randomAVLCallBack();
+	});
 
     //堆
     var heapStartFlag=0;  

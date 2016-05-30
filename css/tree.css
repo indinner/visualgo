@@ -55,7 +55,8 @@
 }
 .avlAction{
 	position:          fixed;
-	left:              394px;
+	/*left:              394px;*/
+	left:              190px;
 	top:               565px;
 	width:             80px;
 	height:            35px;
