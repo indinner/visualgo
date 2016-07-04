@@ -656,6 +656,16 @@
 	display:           none;
 	cursor:            pointer;
 }
+.Floyd{
+	position:          fixed;
+	left:              190px;
+	top:               530px;
+	width:             150px;
+	height:            35px;
+	background:        rgb(89,229,89);
+	display:           none;
+	cursor:            pointer;
+}
 .dirDijGraph span{
     font-size:         1em;
 	color:             white;

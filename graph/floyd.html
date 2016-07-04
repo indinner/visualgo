@@ -14,13 +14,12 @@
     <script type = "application/javascript" src = "../js/AnimatedRectangle.js"> </script>
     <script type = "application/javascript" src = "../js/AnimatedPointer.js"> </script>
 	<script type = "application/javascript" src = "../js/AnimatedHighlightRectangle.js"> </script>
-	<script type = "application/javascript" src = "../js/StateBox.js"> </script>
     <script type = "application/javascript" src = "../js/Algorithm.js"> </script>
-    <script type = "application/javascript" src = "../js/Kruskal.js"> </script>
-    <link rel="shortcut icon" href="../favicon.ico" />
+    <script type = "application/javascript" src = "../js/Floyd.js"> </script>
+	<link rel="shortcut icon" href="../favicon.ico" />
 	<link rel="stylesheet" href="../css/index.css" />
 	<link rel="stylesheet" type="text/css" href="../css/graph.css"/>
-	<title>Kruskal算法</title>
+	<title>Floyd</title>
 	<script>
           var type=0;
           var index;
@@ -34,49 +33,60 @@
 			        <a href="graphDFSTraverse.html" class="nav" style="text-decoration:none;">DFS遍历</a>
 			        <a href="graphBFSTraverse.html" class="nav" style="text-decoration:none;">BFS遍历</a>
 			        <a href="prim.html" class="nav" style="text-decoration:none;">Prim</a>
-			        <a href="kruscal.html" class="nav selected" style="text-decoration:none;">Kruskal</a>
-			        <a href="dijkstra.html" class="nav"style="text-decoration:none;">Dijkstra</a>
-					<a href="floyd.html" class="nav" style="text-decoration:none;">Floyd</a>
+			        <a href="kruskal.html" class="nav" style="text-decoration:none;">Kruskal</a>
+			        <a href="dijkstra.html" class="nav" style="text-decoration:none;">Dijkstra</a>
+			        <a href="dijkstra.html" class="nav selected" style="text-decoration:none;">Floyd</a>
 			</div>
 		</div>
 		<div class="showBox" width="1000" height="500" style="overflow: scroll;">
 		   <canvas id="drawing" width="2000" height="1000">Canvas</canvas>
 		</div>
-		<div class="kruStartHide">
+		<div class="dijStartHide">
 			<img src="../image/arrow_white_right.png" alt="" />
 		</div>
-		<div class="kruStarts">
+		<div class="dijStarts">
 			<p class="r1">生成随机图</p>
 			<p class="r2">增删边</p>
-			<p class="r3">运行Kruskal</p>
+			<p class="r3">运行Floyd</p>
+			<p class="r4">选项</p>
 		</div>
-		<div class="peakKruNum subX1">
+		<div class="peakDijNum subX1">
 			<span>顶点数量</span>
-			<input type="text" class="peakKruNumber"/>
+			<input type="text" class="peakDijNumber"/>
 		</div>
-		<div class="createKruGraph subX1">
+		<div class="createDijGraph subX1">
 			<p>生成随机图</p>
 		</div>
-		<div class="startKruPeak subX2"> 
+		<div class="startDijPeak subX2"> 
 			<span>起点</span>
-			<input type="text" class="startKruNumber"/>
+			<input type="text" class="startDijNumber"/>
 		</div>
-		<div class="endKruPeak subX2">
+		<div class="endDijPeak subX2">
 			<span>终点</span>
-			<input type="text" class="endKruNumber"/>
+			<input type="text" class="endDijNumber"/>
 		</div>
-		<div class="weightKru subX2">
+		<div class="weightDij subX2">
 			<span>权重</span>
-			<input type="text" class="weightKruNumber"/>
+			<input type="text" class="weightDijNumber"/>
 		</div>
-		<div class="addKruEdge subX2">
+		<div class="addDijEdge subX2">
 			<p>添加边</p>
 		</div>
-        <div class="deleteKruEdge subX2">
+        <div class="deleteDijEdge subX2">
 			<p>删除边</p>
 		</div>
-		<div class="runTraverse subX3 Kruskal">
-			<p>Run Kruskal</p>
+		<!--div class="runDijPeak subX3">
+			<span>起始顶点</span>
+			<input type="text" class="runDijNumber"/>
+		</div-->
+		<div class="runTraverse subX3 Floyd">
+			<p>Run Floyd</p>
+		</div>
+		<div class="dirDijGraph subX4">
+		  <form>
+			<input type="radio" name="dir" class="radio1" value='1'><span>有向图</span>
+			<input type="radio" name="dir" class="radio2" value='0'><span>无向图</span>
+		  </form>
 		</div>
 		<div class="stateHide">
 			<img src="../image/arrow_white_right.png" alt="" />

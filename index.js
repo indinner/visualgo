@@ -1118,6 +1118,10 @@ $(function(){
         runDijkstraCallBack(runNumber);
         // $('.runDijNumber').val('');
     });
+    // run Floyd 
+    $('.Floyd').click(function() {
+        runFloydCallBack();
+    });
 
     //--------------------------------------------------------------------------------
     // 排序部分
