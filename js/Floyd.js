@@ -632,10 +632,27 @@ Graph.prototype.Floyd = function() {
 		this.cmd('SetBackgroundColor', this.columnHeader[i].objectID, this.backgroundColor);
 	}
 
+	var highlightCircle1 = new Node(this.objectID++, '', this.position[0][0], this.position[0][1]);
+	var highlightCircle2 = new Node(this.objectID++, '', this.position[0][0], this.position[0][1]);
+	var highlightCircle3 = new Node(this.objectID++, '', this.position[0][0], this.position[0][1]);
+	// this.cmd('CreateCircle', highlightCircle1.objectID, highlightCircle1.value, highlightCircle1.x, highlightCircle1.y, this.radius);
+	// this.cmd('SetForegroundColor', highlightCircle1.objectID, this.foregroundColor);
+	// this.cmd('SetBackgroundColor', highlightCircle1.objectID, this.backgroundColor);
+
 	// calculate shortest this.dist
 	for (var k=0; k<this.vertexNum; k++) {
 		for (var i=0; i<this.vertexNum; i++) {
 			for (var j=0; j<this.vertexNum; j++) {
+				if (i == j || j == k|| i == k) {
+					continue;
+				}
+				// highlight node in graph
+				// this.cmd('SetHighlight', i, true);
+				// this.cmd('SetHighlight', j, true);
+				this.cmd('SetBackgroundColor', i, this.backgroundColor);
+				this.cmd('SetBackgroundColor', j, this.backgroundColor);
+				this.cmd('SetBackgroundColor', k, this.backgroundColor);
+
 				if (this.dist[i][k]+this.dist[k][j] < this.dist[i][j]) {
 					this.cmd('SetState', 'dist['+i+']['+k+']+dist['+k+']['+j+'] < dist['+i+']['+j+']');
 					this.dist[i][j] = this.dist[i][k] + this.dist[k][j];
@@ -661,6 +678,12 @@ Graph.prototype.Floyd = function() {
 					this.cmd('SetHighlight', this.table[k][j].objectID, false);
 					this.cmd('Step');
 				}
+
+				this.cmd('SetBackgroundColor', i, '#FFFFFF');
+				this.cmd('SetBackgroundColor', j, '#FFFFFF');
+				this.cmd('SetBackgroundColor', k, '#FFFFFF');
+				// this.cmd('SetHighlight', i, false);
+				// this.cmd('SetHighlight', j, false);
 			}
 		}
 	}
