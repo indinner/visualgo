@@ -244,6 +244,7 @@ AVLTree.prototype.deleteNode = function () {
 		}
 	}
 	else {
+		del = temp.parent
 		// 如果是叶子节点
 		if(temp.leftChild == null && temp.rightChild == null) {
 			// 直接删除
@@ -395,6 +396,55 @@ AVLTree.prototype.deleteNode = function () {
 			temp = null ;
 			this.resizeTree() ;
 		}
+		// 更新树的每个节点的位置
+		this.resizeTree();
+		// 计算每个节点的高度
+		this.calHeight(this.root);
+		// 更新每个节点的平衡因子
+		this.calBalFactor(this.root);
+		// 从该节点向上回溯
+		var isTurn = false;
+		var stack = new Array(); // 栈存储路径
+		temp = del;
+		while (temp != null) {
+			stack.push(temp);
+			if (temp.balfactor >= 2 || temp.balfactor <= -2) {
+				isTurn = true;
+				break;
+			}
+			temp = temp.parent;
+		}
+		if (isTurn) {
+			var first = stack.pop();
+			var second = stack.pop();
+			var third = stack.pop();
+			// set highlight
+			{
+				this.cmd("SetHighlight", first.objectID, true);
+				this.cmd("SetHighlight", second.objectID, true);
+				this.cmd("SetHighlight", third.objectID, true);
+				this.cmd("Step");
+				this.cmd("SetHighlight", first.objectID, false);
+				this.cmd("SetHighlight", second.objectID, false);
+				this.cmd("SetHighlight", third.objectID, false);
+				this.cmd("Step");
+			}
+			// start turning
+			if (first.leftChild == second && second.leftChild == third) {
+				this.singleRightTurn(first, second);
+			}
+			else if (first.rightChild == second && second.rightChild == third) {
+				this.singleLeftTurn(first, second);
+			}
+			else if (first.leftChild == second && second.rightChild == third) {
+				this.leftRightTurn(first, second, third);
+			}
+			else if (first.rightChild == second && second.leftChild == third) {
+				this.rightLeftTurn(first, second, third);
+			}
+		}
+		// update position of every points
+		this.resizeTree();
 	}
 	return this.commands;
 }
