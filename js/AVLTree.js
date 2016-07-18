@@ -42,6 +42,7 @@ AVLTree.prototype.initAttributes = function() {
 	this.startX = 600 ; // 新节点的x坐标
 	this.startY = 150 ; // 新节点的y坐标
 	this.startRootX = 800; // 根结点的x坐标
+	// this.array = [[3, 2, 1]];
 	this.array = [[3, 2, 1, 4, 5, 6, 7, 16, 15, 14, 13, 12, 11, 10, 8, 9],
 		[7, 4, 2, 1, 3, 6, 5, 13, 11, 9, 8, 10, 12, 15, 14, 16],
 		[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
@@ -50,6 +51,7 @@ AVLTree.prototype.initAttributes = function() {
 		[16, 14, 15, 12, 10, 8, 9, 11, 13, 5, 6, 3, 1, 2, 4, 7],
 		[16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
 		[7, 13, 15, 16, 14, 11, 12, 9, 10, 8, 4, 6, 5, 2, 3, 1]];
+	this.index = 0;
 	// 初始化状态框
 	// this.implementAction(this.initStateBox.bind(this), "start");
 }
@@ -71,23 +73,330 @@ AVLTree.prototype.randomAVLCallBack = function (value) {
 	this.implementAction(this.randomAVL.bind(this), 0);
 }
 
+// 随机生成
+AVLTree.prototype.randomAVL = function (value) {
+	this.index = Math.round(Math.random() * this.array.length) % this.array.length;
+	for (var i = 0; i < this.array[this.index].length; i++) {
+		this.insertNode(this.array[this.index][i]);
+	}
+	this.deleteNode();
+	return this.commands;
+}
+
 // 插入回调函数
-AVLTree.prototype.insertCallBack = function(value) {
+AVLTree.prototype.insertCallBack = function (value) {
 	var insertValue = parseInt(value);
-	if (insertValue != "" && !isNaN(insertValue))
-	{
+	if (insertValue != "" && !isNaN(insertValue)) {
 		this.implementAction(this.insertNode.bind(this), insertValue);
 	}
 }
 
-// 随机生成
-AVLTree.prototype.randomAVL = function (value) {
-	var index = Math.round(Math.random() * this.array.length) % this.array.length;
-	for (var i = 0; i < this.array[index].length; i++) {
-		this.insertNode(this.array[index][i]);
+// 删除
+AVLTree.prototype.deleteNode = function () {
+	// 随机删除
+	node = Math.round(Math.random() * this.array[this.index].length) % this.array[this.index].length;
+	value = this.array[this.index][node];
+	this.cmd("SetState", "删除节点" + value);
+	var temp = this.root;
+	// 开始查找
+	while (true) {
+		if (value >= temp.value && temp.rightChild != null) {
+			// 找到节点
+			{
+				this.cmd("SetState", "节点比较" + value + ">=" + temp.value);
+				this.cmd("Step");
+				this.cmd("SetHighlight", temp.objectID, true);
+				this.cmd("Step");
+				this.cmd("SetHighlight", temp.objectID, false);
+				this.cmd("Step");
+			}
+			temp = temp.rightChild;
+		}
+		else if (value < temp.value && temp.leftChild != null) {
+			// 找到节点
+			{
+				this.cmd("SetState", "节点比较" + value + "<" + temp.value);
+				this.cmd("Step");
+				this.cmd("SetHighlight", temp.objectID, true);
+				this.cmd("Step");
+				this.cmd("SetHighlight", temp.objectID, false);
+				this.cmd("Step");
+			}
+			temp = temp.leftChild;
+		}
+		else {
+			break;
+		}
 	}
-
-	return this.commands
+	// 找到节点
+	if (value >= temp.value) {
+		// 设置状态框
+		{
+			this.cmd("SetState", "节点比较" + value + ">=" + temp.value);
+			this.cmd("Step");
+		}
+	}
+	else {
+		// 设置状态框
+		{
+			this.cmd("SetState", "节点比较" + value + "<" + temp.value);
+			this.cmd("Step");
+		}
+	}
+	// 设置高亮
+	{
+		this.cmd("SetHighlight", temp.objectID, true);
+		this.cmd("Step");
+		this.cmd("SetHighlight", temp.objectID, false);
+		this.cmd("Step");
+	}
+	this.cmd("SetState", "删除节点" + temp.value);
+	
+	if(temp.parent == null) { // 删除的是根节点
+		// 如果只有根节点
+		if(temp.leftChild == null && temp.rightChild == null) {
+			// 直接删除
+			{
+				this.cmd("SetState", "该节点没有子节点，直接删除") ;
+				this.cmd("Step") ;
+				this.cmd("Delete", temp.objectID) ;
+				this.cmd("Step") ;
+			}
+			this.root = null;
+		}
+			// 如果只有右孩子
+		else if(temp.leftChild == null) {
+			// 断开连线
+			{
+				this.cmd("Disconnect", temp.objectID, temp.rightChild.objectID) ;
+				this.cmd("Step") ;
+			}
+			var del = temp ;
+			this.root = temp.rightChild;
+			this.root.parent = null;
+			// 删除节点
+			{
+				this.cmd("Delete", del.objectID) ;
+				this.cmd("Step") ;
+			}
+			this.resizeTree() ;
+		}
+			// 如果只有左孩子
+		else if(temp.rightChild == null) {
+			// 断开连线
+			{
+				this.cmd("Disconnect", temp.objectID, temp.leftChild.objectID) ;
+				this.cmd("Step") ;
+			}
+			var del = temp ;
+			this.root = temp.leftChild;
+			this.root.parent = null;
+			// 删除节点
+			{
+				this.cmd("Delete", del.objectID) ;
+				this.cmd("Step") ;
+			}
+			this.resizeTree() ;
+		}
+			// 如果左右孩子均有
+		else {
+			// 先找到左孩子的最右节点
+			var rightest = temp.leftChild ;
+			while(rightest.rightChild != null) {
+				// 找右孩子
+				{
+					this.cmd("Step") ;
+					this.cmd("SetHighlight", rightest.objectID, true) ;
+					this.cmd("Step") ;
+					this.cmd("SetHighlight", rightest.objectID, false) ;
+					this.cmd("Step") ;
+				}
+				rightest = rightest.rightChild ;
+			}
+			// 找到最右侧孩子
+			{
+				this.cmd("SetHighlightColor", rightest.objectID, this.palegreen) ;
+				this.cmd("SetState", "找到左子树的最右侧孩子") ;
+				this.cmd("Step") ;
+				this.cmd("SetHighlight", rightest.objectID, true) ;
+				this.cmd("Step") ;
+				this.cmd("SetHighlight", rightest.objectID, false) ;
+				this.cmd("Step") ;
+				this.cmd("SetHighlightColor", rightest.objectID, this.tomato) ;
+			}
+			// 令最右侧的节点变成根节点
+			rightest.x = temp.x ;
+			rightest.y = temp.y ;
+			{
+				this.cmd("Delete", temp.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Disconnect", rightest.parent.objectID, rightest.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Move", rightest.objectID, rightest.x, rightest.y) ;
+				this.cmd("Step") ;
+			}
+			rightest.leftChild = temp.leftChild ;
+			rightest.rightChild = temp.rightChild ;
+			rightest.parent.rightChild = null ;
+			rightest.parent = temp.parent ;
+			this.root = rightest ;
+			this.resizeTree() ;
+		}
+	}
+	else {
+		// 如果是叶子节点
+		if(temp.leftChild == null && temp.rightChild == null) {
+			// 直接删除
+			{
+				this.cmd("SetState", "该节点没有子节点，直接删除") ;
+				this.cmd("Step") ;
+				this.cmd("Disconnect", temp.parent.objectID, temp.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Delete", temp.objectID) ;
+				this.cmd("Step") ;
+			}
+			// 置其父节点的这个孩子为空
+			if(temp == temp.parent.leftChild) {
+				temp.parent.leftChild = null ;
+			}
+			else {
+				temp.parent.rightChild = null ;
+			}
+			temp = null ;
+		}
+			// 如果只有右孩子
+		else if(temp.leftChild == null) {
+			// 断开连线
+			{
+				this.cmd("Disconnect", temp.parent.objectID, temp.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Disconnect", temp.objectID, temp.rightChild.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Delete", temp.objectID) ;
+				this.cmd("Step") ;
+			}
+			// 置其父节点的这个孩子为这个孩子的右孩子
+			if(temp == temp.parent.leftChild) {
+				// 建立连接
+				{
+					this.cmd("Connect", temp.parent.objectID, temp.rightChild.objectID, this.foregroundColor) ;
+					this.cmd("Step") ;
+				}
+				temp.parent.leftChild = temp.rightChild ;
+				temp.rightChild.parent = temp.parent ;
+			}
+			else {
+				// 建立连接
+				{
+					this.cmd("Connect", temp.parent.objectID, temp.rightChild.objectID, this.foregroundColor) ;
+					this.cmd("Step") ;
+				}
+				temp.parent.rightChild = temp.rightChild ;
+				temp.rightChild.parent = temp.parent ;
+			}
+			temp = null ;
+			this.resizeTree() ;
+		}
+			// 如果只有左孩子
+		else if(temp.rightChild == null) {
+			// 断开连线
+			{
+				this.cmd("Disconnect", temp.parent.objectID, temp.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Disconnect", temp.objectID, temp.leftChild.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Delete", temp.objectID) ;
+				this.cmd("Step") ;
+			}
+			// 置其父节点的这个孩子为这个孩子的右孩子
+			if(temp == temp.parent.leftChild) {
+				// 建立连接
+				{
+					this.cmd("Connect", temp.parent.objectID, temp.leftChild.objectID, this.foregroundColor) ;
+					this.cmd("Step") ;
+				}
+				temp.parent.leftChild = temp.leftChild ;
+				temp.leftChild.parent = temp.parent ;
+			}
+			else {
+				// 建立连接
+				{
+					this.cmd("Connect", temp.parent.objectID, temp.leftChild.objectID, this.foregroundColor) ;
+					this.cmd("Step") ;
+				}
+				temp.parent.rightChild = temp.leftChild ;
+				temp.leftChild.parent = temp.parent ;
+			}
+			temp = null ;
+			this.resizeTree() ;
+		}
+			// 如果左右孩子均有
+		else {
+			// 先找到左孩子的最右节点
+			var rightest = temp.leftChild ;
+			while(rightest.rightChild != null) {
+				// 找右孩子
+				{
+					this.cmd("Step") ;
+					this.cmd("SetHighlight", rightest.objectID, true) ;
+					this.cmd("Step") ;
+					this.cmd("SetHighlight", rightest.objectID, false) ;
+					this.cmd("Step") ;
+				}
+				rightest = rightest.rightChild ;
+			}
+			// 找到最右侧孩子
+			{
+				this.cmd("SetHighlightColor", rightest.objectID, this.palegreen) ;
+				this.cmd("SetState", "找到左子树的最右侧孩子") ;
+				this.cmd("Step") ;
+				this.cmd("SetHighlight", rightest.objectID, true) ;
+				this.cmd("Step") ;
+				this.cmd("SetHighlight", rightest.objectID, false) ;
+				this.cmd("Step") ;
+				this.cmd("SetHighlightColor", rightest.objectID, this.tomato) ;
+			}
+			// 令最右侧的节点变成根节点
+			rightest.x = temp.x ;
+			rightest.y = temp.y ;
+			{
+				this.cmd("Disconnect", rightest.parent.objectID, rightest.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Connect", rightest.objectID, temp.leftChild.objectID, this.foregroundColor) ;
+				this.cmd("Step") ;
+				this.cmd("Connect", rightest.objectID, temp.rightChild.objectID, this.foregroundColor) ;
+				this.cmd("Step") ;
+				this.cmd("Disconnect", temp.parent.objectID, temp.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Disconnect", temp.objectID, temp.leftChild.objectID) ;
+				this.cmd("Disconnect", temp.objectID, temp.rightChild.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Connect", temp.parent.objectID, rightest.objectID, this.foregroundColor) ;
+				this.cmd("Step") ;
+				this.cmd("Delete", temp.objectID) ;
+				this.cmd("Step") ;
+				this.cmd("Move", rightest.objectID, rightest.x, rightest.y) ;
+				this.cmd("Step") ;
+			}
+			if(rightest != temp.leftChild) {
+				rightest.parent.rightChild = null ;
+				rightest.leftChild = temp.leftChild ;
+				temp.leftChild.parent = rightest ;
+			}
+			rightest.rightChild = temp.rightChild ;
+			temp.rightChild.parent = rightest ;
+			rightest.parent = temp.parent ;
+			if(temp == temp.parent.leftChild) {
+				temp.parent.leftChild = rightest ;
+			}
+			else {
+				temp.parent.rightChild = rightest ;
+			}
+			temp = null ;
+			this.resizeTree() ;
+		}
+	}
+	return this.commands;
 }
 
 // 插入
@@ -242,9 +551,166 @@ AVLTree.prototype.insertNode = function (value) {
 			}
 		}
 		// update position of every points
-		this.resizeTree() ;
+		this.resizeTree();
 	}
 	return this.commands ;
+}
+
+// 删除
+AVLTree.prototype.insertNode = function (value) {
+	// 如果根节点为空
+	if (this.root == null || this.root == undefined) {
+		this.root = new TreeNode(this.objectID, value, this.startRootX, this.startY, 0, null, null, null);
+		this.objectID++;
+		// 创建根节点
+		{
+			this.cmd("SetState", "创建根节点" + value);
+			this.cmd("Step");
+			this.cmd("CreateCircle", this.root.objectID, this.root.value, this.root.x, this.root.y, this.radius);
+			this.cmd("SetForegroundColor", this.root.objectID, this.foregroundColor);
+			this.cmd("SetBackgroundColor", this.root.objectID, this.backgroundColor);
+			this.cmd("Step");
+		}
+	}
+	else {
+		var temp = this.root;
+		var newNode = new TreeNode(this.objectID, value, this.startX, this.startY, null, null, null);
+		this.objectID++;
+		// 创建新节点
+		{
+			this.cmd("SetState", "创建新节点" + value);
+			this.cmd("Step");
+			this.cmd("CreateCircle", newNode.objectID, newNode.value, newNode.x, newNode.y, this.radius);
+			this.cmd("SetForegroundColor", newNode.objectID, this.foregroundColor);
+			this.cmd("SetBackgroundColor", newNode.objectID, this.backgroundColor);
+			this.cmd("Step");
+		}
+		// 开始查找
+		while (true) {
+			if (newNode.value >= temp.value && temp.rightChild != null) {
+				// 找到节点
+				{
+					this.cmd("SetState", "节点比较" + newNode.value + ">=" + temp.value);
+					this.cmd("Step");
+					this.cmd("SetHighlight", temp.objectID, true);
+					this.cmd("Step");
+					this.cmd("SetHighlight", temp.objectID, false);
+					this.cmd("Step");
+				}
+				temp = temp.rightChild;
+			}
+			else if (newNode.value < temp.value && temp.leftChild != null) {
+				// 找到节点
+				{
+					this.cmd("SetState", "节点比较" + newNode.value + "<" + temp.value);
+					this.cmd("Step");
+					this.cmd("SetHighlight", temp.objectID, true);
+					this.cmd("Step");
+					this.cmd("SetHighlight", temp.objectID, false);
+					this.cmd("Step");
+				}
+				temp = temp.leftChild;
+			}
+			else {
+				break;
+			}
+		}
+		// 找到节点
+		if (newNode.value >= temp.value) {
+			// 设置状态框
+			{
+				this.cmd("SetState", "节点比较" + newNode.value + ">=" + temp.value);
+				this.cmd("Step");
+			}
+		}
+		else {
+			// 设置状态框
+			{
+				this.cmd("SetState", "节点比较" + newNode.value + "<" + temp.value);
+				this.cmd("Step");
+			}
+		}
+		// 设置高亮
+		{
+			this.cmd("SetHighlight", temp.objectID, true);
+			this.cmd("Step");
+			this.cmd("SetHighlight", temp.objectID, false);
+			this.cmd("Step");
+			this.cmd("Connect", temp.objectID, newNode.objectID, this.foregroundColor);
+			this.cmd("Step");
+		}
+		// 节点插入到相应位置
+		if (parseInt(newNode.value) >= parseInt(temp.value)) {
+			// 插入到右侧
+			temp.rightChild = newNode;
+			newNode.parent = temp;
+			// 插入
+			{
+				this.cmd("SetState", "新节点" + newNode.value + "插入到父节点" + temp.value + "的右孩子");
+				this.cmd("Step");
+			}
+		}
+		else {
+			// 插入到左侧
+			temp.leftChild = newNode;
+			newNode.parent = temp;
+			// 插入
+			{
+				this.cmd("SetState", "新节点" + newNode.value + "插入到父节点" + temp.value + "的左孩子");
+				this.cmd("Step");
+			}
+		}
+		// 更新树的每个节点的位置
+		this.resizeTree();
+		// 计算每个节点的高度
+		this.calHeight(this.root);
+		// 更新每个节点的平衡因子
+		this.calBalFactor(this.root);
+		// 从该节点向上回溯
+		var isTurn = false;
+		var stack = new Array(); // 栈存储路径
+		temp = newNode;
+		while (temp != null) {
+			stack.push(temp);
+			if (temp.balfactor >= 2 || temp.balfactor <= -2) {
+				isTurn = true;
+				break;
+			}
+			temp = temp.parent;
+		}
+		if (isTurn) {
+			var first = stack.pop();
+			var second = stack.pop();
+			var third = stack.pop();
+			// set highlight
+			{
+				this.cmd("SetHighlight", first.objectID, true);
+				this.cmd("SetHighlight", second.objectID, true);
+				this.cmd("SetHighlight", third.objectID, true);
+				this.cmd("Step");
+				this.cmd("SetHighlight", first.objectID, false);
+				this.cmd("SetHighlight", second.objectID, false);
+				this.cmd("SetHighlight", third.objectID, false);
+				this.cmd("Step");
+			}
+			// start turning
+			if (first.leftChild == second && second.leftChild == third) {
+				this.singleRightTurn(first, second);
+			}
+			else if (first.rightChild == second && second.rightChild == third) {
+				this.singleLeftTurn(first, second);
+			}
+			else if (first.leftChild == second && second.rightChild == third) {
+				this.leftRightTurn(first, second, third);
+			}
+			else if (first.rightChild == second && second.leftChild == third) {
+				this.rightLeftTurn(first, second, third);
+			}
+		}
+		// update position of every points
+		this.resizeTree();
+	}
+	return this.commands;
 }
 
 // single right turn method
