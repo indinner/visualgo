@@ -1465,6 +1465,11 @@ $(function(){
 		init();
         currentAVLTree.randomAVLCallBack();
 	});
+	// 随机删除
+	$('.avlDelete').click(function () {
+		init();
+		currentAVLTree.deleteAVLCallBack();
+	});
 
     //堆
     var heapStartFlag=0;  

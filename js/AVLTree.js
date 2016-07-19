@@ -42,7 +42,8 @@ AVLTree.prototype.initAttributes = function() {
 	this.startX = 600 ; // 新节点的x坐标
 	this.startY = 150 ; // 新节点的y坐标
 	this.startRootX = 800; // 根结点的x坐标
-	// this.array = [[3, 2, 1]];
+	// this.array = [[3, 2, 1, 4]];
+	
 	this.array = [[3, 2, 1, 4, 5, 6, 7, 16, 15, 14, 13, 12, 11, 10, 8, 9],
 		[7, 4, 2, 1, 3, 6, 5, 13, 11, 9, 8, 10, 12, 15, 14, 16],
 		[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
@@ -51,7 +52,9 @@ AVLTree.prototype.initAttributes = function() {
 		[16, 14, 15, 12, 10, 8, 9, 11, 13, 5, 6, 3, 1, 2, 4, 7],
 		[16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
 		[7, 13, 15, 16, 14, 11, 12, 9, 10, 8, 4, 6, 5, 2, 3, 1]];
+	
 	this.index = 0;
+	this.ifdelete = false;
 	// 初始化状态框
 	// this.implementAction(this.initStateBox.bind(this), "start");
 }
@@ -76,6 +79,7 @@ AVLTree.prototype.randomAVLCallBack = function (value) {
 // 随机生成
 AVLTree.prototype.randomAVL = function (value) {
 	this.index = Math.round(Math.random() * this.array.length) % this.array.length;
+	this.ifdelete = true;
 	for (var i = 0; i < this.array[this.index].length; i++) {
 		this.insertNode(this.array[this.index][i]);
 	}
@@ -91,12 +95,32 @@ AVLTree.prototype.insertCallBack = function (value) {
 	}
 }
 
+// 删除回调函数
+AVLTree.prototype.deleteAVLCallBack = function (value) {
+	this.implementAction(this.deleteNode.bind(this), 0);
+}
+
+// 删除回调函数
+AVLTree.prototype.deleteCallBack = function (value) {
+	// 随机删除
+	if (this.ifdelete == true) {
+		node = Math.round(Math.random() * this.array[this.index].length) % this.array[this.index].length;
+		value = this.array[this.index][node];
+		this.array[this.index].splice(node, 1);
+		this.implementAction(this.deleteNode.bind(this), value);
+	}
+	else {
+		alert("不可删除");
+	}
+}
+
 // 删除
 AVLTree.prototype.deleteNode = function () {
-	// 随机删除
 	node = Math.round(Math.random() * this.array[this.index].length) % this.array[this.index].length;
 	value = this.array[this.index][node];
 	this.cmd("SetState", "删除节点" + value);
+	this.cmd("Step");
+	this.cmd("Step");
 	var temp = this.root;
 	// 开始查找
 	while (true) {
