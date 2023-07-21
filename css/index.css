@@ -1,4 +1,5 @@
-body{ 
+
+body{
 	 width:            100%;
 	 min-width:        750px;
 	 margin:           0;
@@ -11,7 +12,7 @@ body{
      width:            100%;
      height:           100%;
 	 font-family:      '微软雅黑';
-	 background:       #eeeeee;
+	 background:       #F4F5F7;
 	 overflow-x:       hidden;
 }
 .mainSub{
@@ -22,7 +23,7 @@ body{
 	 width:            100%;
 	 height:           100%;
 	 font-family:      '微软雅黑';
-	 background:       #289CF8;
+	 background:       #F4F5F7;
 	 overflow-x:       hidden;
 }
 .header{
@@ -30,7 +31,7 @@ body{
 	 top:              0px;
 	 width:            100%;
 	 height:           70px;
-	 background:       #289CF8;
+	 background:       #F4F5F7;
 	 color:            white;
 }
 
@@ -122,18 +123,18 @@ body{
 	font-size:         1.3em;
 	text-decoration:   none;
 	float:             left;
-	color:             white;
+	color:             #6E7F91;
 	cursor:            pointer;     
 }
 a hover{
     color:             rgb(136, 131, 131);
 }
 .selected{
-	color: rgb(241, 98, 98);
+	color: #2F9EFE;
 }
 .showBox{
     width:             93.9%;
-    height:            550px;
+    height:            calc(100vh - 120px);
     position:          relative;
     left:              40px;
     top:               70px;
